@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const verifyToken = require('./verifyToken');
 require('dotenv').config();
-var DB_CONNECTION = "mongodb://localhost:27017/studentDB";
+var DB_CONNECTION = "mongodb+srv://supun:1234@cluster0.2mmgq.mongodb.net/OnlineFood";
 var SECRET_KEY = "supun";
 
 //connect to the database
