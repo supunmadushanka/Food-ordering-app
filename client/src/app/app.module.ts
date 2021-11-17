@@ -15,6 +15,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
@@ -61,6 +62,8 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     MatBadgeModule,
     MatProgressSpinnerModule,
     MatMenuModule
+
+    
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

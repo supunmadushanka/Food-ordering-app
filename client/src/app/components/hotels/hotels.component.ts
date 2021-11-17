@@ -4,23 +4,28 @@ import { Router } from '@angular/router';
 import { ISortOption } from '../../models/sort-option';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
+
 @Component({
   selector: 'app-hotels',
   templateUrl: './hotels.component.html',
   styleUrls: ['./hotels.component.scss']
 })
+
+
 export class HotelsComponent implements OnInit {
   
+
   public hotels = [];
   public hotelsConstant = [];
   public userName = '';
+  
 
   sortOptions: ISortOption[] = [
     {value: 'name', viewValue: 'Name'},
     {value: 'rating', viewValue: 'Rating'},
     {value: 'reviews', viewValue: 'Review'}
   ];
-
+ 
   selectedValue = this.sortOptions[0].value; // default sorting
 
   constructor(private _hotelService: HotelService, private router: Router) { }
