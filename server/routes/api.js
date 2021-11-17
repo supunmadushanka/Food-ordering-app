@@ -138,6 +138,30 @@ router.delete('/deleteHotel/:hotelId', verifyToken, async (req, res) => {
         })
 });
 
+router.delete('/orderDelete/:userId/:orderId', verifyToken, async (req, res) => {
+    const user = await User.findById(req.params.userId);
+    if (!user) return res.status(400).send("User doesn't exist!");
+
+    User.updateOne(
+        { _id: req.params.userId },
+        {
+            $pull: {
+                orders: {
+                    _id : req.params.orderId
+                }
+            }
+        },
+        function (err, success) {
+            if (err) {
+                return res.status(500).send(err)
+            }
+            else {
+                return res.status(200).send(success);
+            }
+        }
+    )
+});
+
 router.put('/updateHotel/:hotelId', verifyToken, async (req, res) => {
     Hotel.findOne({ _id: req.params.hotelId },
         (err, hotel) => {

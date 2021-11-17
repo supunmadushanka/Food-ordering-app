@@ -31,6 +31,20 @@ export class HotelComponent implements OnInit, AfterViewInit {
   constructor(private _hotelService: HotelService, private route: ActivatedRoute, 
     private router: Router, private _sidenavService: SideNavService, private ref: ChangeDetectorRef) { }
 
+  deleteHistory(orderId){
+    this._hotelService.deleteOrder(orderId,this.userId)
+    .subscribe(
+      response=>{
+        console.log('success',response);
+        this.ngOnInit();
+      },
+      error=>{
+        console.error('error',error)
+      }
+    )
+
+  }
+
   scrollTop = () => {
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera

@@ -61,6 +61,9 @@
                 <div class="price-container" *ngIf="ordersHistory.orders?.length">
                     <h3>Order History</h3>
                     <div class="history-order-items" *ngFor="let order of ordersHistory.orders">
+                        <button (click)=deleteHistory(order._id) mat-fab color="warn" aria-label="Example icon button with a delete icon">
+                            <mat-icon>delete</mat-icon>
+                          </button>
                         <h4 class="order-date">{{order.orderDate | date}}</h4>
                         <mat-card class="history-order-card" *ngFor="let menu of order.menu">
                             <mat-card-header>
