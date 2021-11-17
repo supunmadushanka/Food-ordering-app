@@ -1,15 +1,19 @@
 <mat-card>
-    <mat-card-header>
-      <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + hotelThumbnail + ')'}"></div>
-      <mat-card-title  title="{{hotelName}}">{{hotelName}}</mat-card-title>
-      <mat-card-subtitle  title="{{cuisines}}">{{cuisines}}</mat-card-subtitle>
-    </mat-card-header>
+  <mat-card-header>
+    <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + hotelThumbnail + ')'}"></div>
+    <mat-card-title title="{{hotelName}}">{{hotelName}}</mat-card-title>
+    <mat-card-subtitle title="{{cuisines}}">{{cuisines}}</mat-card-subtitle>
+  </mat-card-header>
+  <button (click)="deleteHotel()">delete</button>&nbsp;
+  <button (click)="updateHotel()">update</button>
+  <div class="image-content">
     <img mat-card-image width="400" height="300" src="{{hotelThumbnail}}" alt="Hotel {{hotelName}}">
-    <mat-card-content>
-      <p>Rating: <span class="rating-star">{{'★'.repeat(math.round(rating))}}</span></p>
-      <p>Review: {{review}}</p>
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-raised-button color="warn">Order Now</button>
-    </mat-card-actions>
-  </mat-card>
+  </div>
+  <mat-card-content>
+    <p>Rating: <span class="rating-star">{{'★'.repeat(math.round(rating))}}</span></p>
+    <p>Review: {{review}}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="warn" (click)="goToHotel()">Order Now</button>
+  </mat-card-actions>
+</mat-card>

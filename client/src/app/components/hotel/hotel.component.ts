@@ -36,6 +36,11 @@ export class HotelComponent implements OnInit, AfterViewInit {
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   }
 
+  addItem(){
+    this.router.navigate(['/additem']);
+    this._hotelService.setHotelId(this.hotel._id);
+  }
+
   addToMyCart = (menu) => {
     const newItem = {
       "id": menu.id,

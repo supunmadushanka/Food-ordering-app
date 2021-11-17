@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AvatarModule } from 'ngx-avatar';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ReactiveFormsModule} from '@angular/forms';
 
 import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
@@ -29,6 +30,8 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { AddItemComponent } from './components/add-item/add-item.component';
+import { UpdateHotelCardComponent } from './components/hotel-card/update-hotel-card/update-hotel-card.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,9 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     MenuItemComponent,
     SearchBarComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    AddItemComponent,
+    UpdateHotelCardComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +65,8 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     MatSidenavModule,
     MatBadgeModule,
     MatProgressSpinnerModule,
-    MatMenuModule
+    MatMenuModule,
+    ReactiveFormsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

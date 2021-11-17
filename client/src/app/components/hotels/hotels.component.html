@@ -21,8 +21,8 @@
 
     <div class="hotel-cards">
         <div *ngFor="let hotel of hotels" class="hotel">
-            <app-hotel-card [hotelName]="hotel.name" [hotelThumbnail]="hotel.thumbnail_image" [hotelImage]="hotel.feature_image"
-            [cuisines]="hotel.cuisines" [rating]="hotel.rating" [review]="hotel.reviews" (click)="goToHotel(hotel)" ></app-hotel-card>
+            <app-hotel-card [Id]="hotel.id" [hotelId]="hotel._id" [hotelName]="hotel.name" [hotelThumbnail]="hotel.thumbnail_image" [hotelImage]="hotel.feature_image"
+            [cuisines]="hotel.cuisines" [rating]="hotel.rating" [review]="hotel.reviews"></app-hotel-card>
         </div>
     </div>
 

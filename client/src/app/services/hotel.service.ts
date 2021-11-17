@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { ICartItem } from '../models/cart-item';
 import { environment } from 'src/environments/environment';
 import { IOrder } from '../models/order';
+//import {  } from '../../../../server/uploads';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,18 @@ export class HotelService {
 
   private url: string = (environment.baseURL) ? `${environment.baseURL}api/hotels` : 'api/hotels';
   private orderURL: string = (environment.baseURL) ? `${environment.baseURL}api/order` : 'api/order';
+  private itemURL: string = (environment.baseURL) ? `${environment.baseURL}api/addItem` : 'api/addItem';
+  private hotelDelete: string = (environment.baseURL) ? `${environment.baseURL}api/deleteHotel` : 'api/deleteHotel';
+  private hotelUpdate: string = (environment.baseURL) ? `${environment.baseURL}api/updateHotel` : 'api/updateHotel';
+  private imageUpdate: string = (environment.baseURL) ? `${environment.baseURL}api/updateImage` : 'api/updateImage';
+
   public hasUserName = false;
   public userName = '';
   public email = '';
   public userId = '';
   public cartItems = [];
   public orderHistory = [];
+  public _id;
   public customError = {
     status: 500,
     message: 'Sorry! Something went wrong :('
@@ -69,6 +76,38 @@ export class HotelService {
     );
   }
 
+  public addItem = (item, hotelId): Observable<any> => {
+    return this.httpClient.post<any>(`${this.itemURL}/${hotelId}`, item).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err || this.customError);
+      })
+    );
+  }
+
+  public deleteHotel = (hotelId): Observable<any> => {
+    return this.httpClient.delete<any>(`${this.hotelDelete}/${hotelId}`).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err || this.customError);
+      })
+    );
+  }
+
+  public updateHotel = (hotelId,formData): Observable<any> => {
+    return this.httpClient.put<any>(`${this.hotelUpdate}/${hotelId}`,formData).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err || this.customError);
+      })
+    );
+  }
+
+  public updateImage = (updateHotel,hotelId): Observable<any> => {
+    return this.httpClient.put<any>(`${this.imageUpdate}/${hotelId}`,updateHotel).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err || this.customError);
+      })
+    );
+  }
+
   public saveOrder = (orders, userId): Observable<any> => {
     this.clearAllCartItems();
     return this.httpClient.post<any>(`${this.orderURL}/${userId}`, orders).pipe(
@@ -84,6 +123,14 @@ export class HotelService {
         return throwError(err || this.customError);
       })
     );
+  }
+
+  public setHotelId(_id){
+    this._id=_id;
+  }
+
+  public getHotelId(){
+    return this._id;
   }
 
   public setUserName = (name) => {
