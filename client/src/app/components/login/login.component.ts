@@ -30,7 +30,8 @@ export class LoginComponent implements OnInit {
       '<input id="email" type="email" class="swal2-input" autocomplete="off" placeholder="email" required>' +
       '<input id="password" type="password" class="swal2-input" autocomplete="off" placeholder="password" required>' +
       '<b>New User?</b>&nbsp' +
-      '<a href="/register">Click here to register</a> ',
+      '<a href="/register">Click here to register</a> <br><br>'+
+      '<a href="/forgetpw">Forgot Password</a> ',
       focusConfirm: false,
       confirmButtonColor: '#1838c5',
       allowOutsideClick: false,

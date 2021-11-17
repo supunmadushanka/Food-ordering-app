@@ -80,6 +80,27 @@ router.post('/login', async (req, res) => {
     return res.status(200).send({ token, username: user.username, email: user.email, userId: user.id });
 });
 
+router.put('/changePassword', async (req, res) => {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+    User.findOne({ email: req.body.email },
+        (err, user) => {
+            if (!user)
+                return res.status(404).send(['user Not Exist !']);
+            else {
+                console.log(hashedPassword)
+                user.updateOne({ password: hashedPassword }, function (err, doc) {
+                    if (err) {
+                        return res.status(422).send(['Eror from backend !']);
+                    } else {
+                        return res.status(200).send(['User updated to list!']);
+                    }
+                })
+            }
+        })
+});
+
 router.get('/hotels', verifyToken, async (req, res) => {
     try {
         const hotels = await Hotel.find();
@@ -165,7 +186,7 @@ router.put('/updateImage/:hotelId', upload.single('file'), (req, res, next) => {
                 if (!hotel)
                     return res.status(404).send(['Department Not Exist !']);
                 else {
-                    hotel.updateOne({ thumbnail_image: 'http://localhost:8080/uploads/' + file.filename+'?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A'}, function (err, doc) {
+                    hotel.updateOne({ thumbnail_image: 'http://localhost:8080/uploads/' + file.filename + '?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A' }, function (err, doc) {
                         if (err) {
                             return res.status(422).send(['Eror from backend !']);
                         } else {
