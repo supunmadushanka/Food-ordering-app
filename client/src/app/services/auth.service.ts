@@ -14,6 +14,8 @@ export class AuthService {
 
   private registerURL: string = (environment.baseURL) ? `${environment.baseURL}api/register` : 'api/register';
   private loginURL: string = (environment.baseURL) ? `${environment.baseURL}api/login` : 'api/login';
+  private changePassword: string = (environment.baseURL) ? `${environment.baseURL}api/changePassword` : 'api/changePassword';
+
   private isUserLoggedIn: boolean = false;
 
   userLogStatusChange: Subject<boolean> = new Subject<boolean>();
@@ -39,6 +41,14 @@ export class AuthService {
 
   public login = (user: ILoginUser): Observable<any> => {
     return this.httpClient.post<any>(this.loginURL, user).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err || this.customError);
+      })
+    );
+  }
+
+  public passwordChange = (Model): Observable<any> => {
+    return this.httpClient.put<any>(this.changePassword, Model).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err || this.customError);
       })
