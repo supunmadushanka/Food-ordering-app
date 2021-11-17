@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       '<b>New User?</b>&nbsp' +
       '<a href="/register">Click here to register</a> ',
       focusConfirm: false,
-      confirmButtonColor: '#9c27b0',
+      confirmButtonColor: '#1838c5',
       allowOutsideClick: false,
       allowEscapeKey: false,
       preConfirm: () => {
