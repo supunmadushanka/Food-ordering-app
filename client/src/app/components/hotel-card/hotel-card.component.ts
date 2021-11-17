@@ -31,7 +31,7 @@ export class HotelCardComponent implements OnInit {
     .subscribe(
       response=>{
         console.log('Success!', response);
-        //this.router.navigate(['/']);
+        window.location.reload();
       },
       error=>{
         console.error('Error!', error)
