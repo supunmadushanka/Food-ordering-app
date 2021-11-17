@@ -19,6 +19,7 @@ export class HotelService {
   private hotelDelete: string = (environment.baseURL) ? `${environment.baseURL}api/deleteHotel` : 'api/deleteHotel';
   private hotelUpdate: string = (environment.baseURL) ? `${environment.baseURL}api/updateHotel` : 'api/updateHotel';
   private imageUpdate: string = (environment.baseURL) ? `${environment.baseURL}api/updateImage` : 'api/updateImage';
+  private orderDelete: string = (environment.baseURL) ? `${environment.baseURL}api/orderDelete` : 'api/orderDelete';
 
   public hasUserName = false;
   public userName = '';
@@ -86,6 +87,14 @@ export class HotelService {
 
   public deleteHotel = (hotelId): Observable<any> => {
     return this.httpClient.delete<any>(`${this.hotelDelete}/${hotelId}`).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err || this.customError);
+      })
+    );
+  }
+
+  public deleteOrder = (orderId,userId): Observable<any> => {
+    return this.httpClient.delete<any>(`${this.orderDelete}/${userId}/${orderId}`).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err || this.customError);
       })
