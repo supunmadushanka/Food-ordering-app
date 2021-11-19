@@ -125,7 +125,6 @@ router.get('/getuser/:userId', verifyToken, async (req, res) => {
     try {
         const user = await User.findOne({ _id: req.params.userId });
         res.json(user);
-        console.log(user)
     } catch (err) {
         res.status(404).send(`Unable to process your request - ${err}`);
     }
@@ -262,7 +261,7 @@ router.post('/addItem/:hotelId', verifyToken, async (req, res) => {
 
     const hotel = await Hotel.findById(req.params.hotelId);
     if (!hotel) return res.status(400).send("User doesn't exist!");
-    console.log(req.body);
+
     User.updateOne(
         { _id: req.params.hotelId },
         {
@@ -301,6 +300,17 @@ router.post('/addreview', async (req, res) => {
         }
     })
 
+});
+
+router.get('/getreview/:hotelId', verifyToken, async (req, res) => {
+    console.log(req.params.hotelId)
+    try {
+        const reviews = await Review.find({ hotelId: req.params.hotelId });
+        res.json(reviews);
+        console.log(reviews)
+    } catch (err) {
+        res.status(404).send(`Unable to process your request - ${err}`);
+    }
 });
 
 module.exports = router;

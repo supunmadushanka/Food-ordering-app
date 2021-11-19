@@ -15,11 +15,20 @@ export class ReviewService {
   }
 
   private reviewAdd: string = (environment.baseURL) ? `${environment.baseURL}api/addreview` : 'api/addreview';
+  private reviewsGet: string = (environment.baseURL) ? `${environment.baseURL}api/getreview` : 'api/getreview';
 
   constructor(private httpClient: HttpClient) { }
 
   public addReview = (model): Observable<any> => {
     return this.httpClient.post<any>(this.reviewAdd, model).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err || this.customError);
+      })
+    );
+  }
+
+  public getReviews = (hotelId: string): Observable<any> => {
+    return this.httpClient.get<any>(`${this.reviewsGet}/${hotelId}`).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err || this.customError);
       })

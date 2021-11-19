@@ -11,3 +11,8 @@
         <button type="reset">Reset</button>
     </form>
 </div>
+<div>
+    <div *ngFor="let review of reviews">
+        <div>{{review.userName}}-{{review.review}}</div>
+    </div>
+</div>

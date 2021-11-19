@@ -14,11 +14,12 @@ export class ReviewsComponent implements OnInit {
 
   userId
   hotelId
-  username : any
+  username: any
   public user = [];
+  public reviews = [];
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private _hotelService: HotelService
-    , private _userService: UserService, private _reviewService : ReviewService) { }
+    , private _userService: UserService, private _reviewService: ReviewService) { }
 
   ngOnInit(): void {
     this.userId = this._hotelService.getUserId();
@@ -28,6 +29,16 @@ export class ReviewsComponent implements OnInit {
       .subscribe((data) => {
         this.user = data;
         this.username = data.username;
+      },
+        error => {
+          console.error('error', error)
+        }
+      )
+
+    this._reviewService.getReviews(this._hotelService.getHotelId())
+      .subscribe((data) => {
+        this.reviews = data;
+        console.log(data)
       },
         error => {
           console.error('error', error)
@@ -49,14 +60,14 @@ export class ReviewsComponent implements OnInit {
     this.addReview.value.hotelId = this.hotelId;
 
     this._reviewService.addReview(this.addReview.value)
-    .subscribe(
-      response=>{
-        console.log('success',response)
-      },
-      error=>{
-        console.error('error',error)
-      }
-    )
+      .subscribe(
+        response => {
+          console.log('success', response)
+        },
+        error => {
+          console.error('error', error)
+        }
+      )
   }
 
 
