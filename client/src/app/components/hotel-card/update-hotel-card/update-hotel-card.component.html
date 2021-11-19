@@ -1,5 +1,11 @@
+<app-nav-bar></app-nav-bar>
+<div class="hotel-container">
+    <div class="menu-bar">
+        <h3 class="tagline">Update Restaurant</h3>      
+    </div>
+
 <div class="form">
-    {{updateHotel.value | json}}
+    <!--{{updateHotel.value | json}}-->
     <form class="example-form" [formGroup]="updateHotel" (ngSubmit)="itemsubmit()">
 
         <mat-form-field class="example-full-width" appearance="fill">
@@ -21,7 +27,8 @@
         <input type="file" name="image" placeholder="Ex. Rs. 1000" multiple (change)="selectImage($event)"><br><br>
 
 
-        <button type="submit">Submit</button>
-        <button type="reset">Reset</button>
+        <button type="submit" mat-raised-button color="primary">Submit</button>
+        <button type="reset" mat-raised-button color="accent">Reset</button>
     </form>
+</div>
 </div>
