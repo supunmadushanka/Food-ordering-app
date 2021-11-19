@@ -4,8 +4,9 @@
     <mat-card-title title="{{hotelName}}">{{hotelName}}</mat-card-title>
     <mat-card-subtitle title="{{cuisines}}">{{cuisines}}</mat-card-subtitle>
   </mat-card-header>
-  <button (click)="deleteHotel()">delete</button>&nbsp;
-  <button (click)="updateHotel()">update</button>
+  <button (click)="updateHotel()" mat-raised-button color="primary">Update</button>
+  <button (click)="deleteHotel()" mat-raised-button color="accent">Delete</button>&nbsp;
+  
   <div class="image-content">
     <img mat-card-image width="400" height="300" src="{{hotelThumbnail}}" alt="Hotel {{hotelName}}">
   </div>

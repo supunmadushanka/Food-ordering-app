@@ -5,7 +5,6 @@
         <div class="filters">
             <app-search-bar (searchQueryEvent)="searchQuery($event)"></app-search-bar>
             <app-dropdown [selectedValue]="selectedValue" [sortOptions]="sortOptions" (sortEvent)="sortHotels($event)"></app-dropdown>
-            <button>Add Hotel</button>
         </div>
     </div>
 
@@ -19,7 +18,7 @@
             </h3>
         </div>
     </div>
-
+    <button mat-raised-button color="primary">Add New Restaurant</button>
     <div class="hotel-cards">
         <div *ngFor="let hotel of hotels" class="hotel">
             <app-hotel-card [Id]="hotel.id" [hotelId]="hotel._id" [hotelName]="hotel.name" [hotelThumbnail]="hotel.thumbnail_image" [hotelImage]="hotel.feature_image"
