@@ -135,15 +135,15 @@ export class HotelService {
   }
 
   public setHotelId(_id){
-    this._id=_id;
+    localStorage.setItem('hotel_id', _id);
   }
 
   public getHotelId(){
-    return this._id;
+    return localStorage.getItem('hotel_id');
   }
 
   public getUserId(){
-    return this.userId;
+    return localStorage.getItem('order-my-food-userId');
   }
 
   public setUserName = (name) => {

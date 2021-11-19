@@ -3,6 +3,8 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/user');
 const Hotel = require('../models/hotel');
+const Review = require('../models/review');
+
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const verifyToken = require('./verifyToken');
@@ -119,6 +121,16 @@ router.get('/hotels/:hotelId', verifyToken, async (req, res) => {
     }
 });
 
+router.get('/getuser/:userId', verifyToken, async (req, res) => {
+    try {
+        const user = await User.findOne({ _id: req.params.userId });
+        res.json(user);
+        console.log(user)
+    } catch (err) {
+        res.status(404).send(`Unable to process your request - ${err}`);
+    }
+});
+
 router.get('/order/:userId', verifyToken, async (req, res) => {
 
     const user = await User.findById(req.params.userId);
@@ -147,7 +159,7 @@ router.delete('/orderDelete/:userId/:orderId', verifyToken, async (req, res) => 
         {
             $pull: {
                 orders: {
-                    _id : req.params.orderId
+                    _id: req.params.orderId
                 }
             }
         },
@@ -267,6 +279,28 @@ router.post('/addItem/:hotelId', verifyToken, async (req, res) => {
             }
         }
     )
+});
+
+router.post('/addreview', async (req, res) => {
+    let userData = req.body;
+
+    // create a new review
+    const newReview = new Review({
+        hotelId: req.body.hotelId,
+        userId: req.body.userId,
+        userName: req.body.userName,
+        review: req.body.review
+    });
+
+    // save to the db
+    newReview.save((err, doc) => {
+        if (err) {
+            return res.status(422).send(['Save failed !']);
+        } else {
+            return res.status(200).send(['Department Aded !']);
+        }
+    })
+
 });
 
 module.exports = router;

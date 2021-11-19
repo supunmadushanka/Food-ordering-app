@@ -10,7 +10,7 @@ import {HotelService} from '../../services/hotel.service'
 })
 export class AddItemComponent implements OnInit {
 
-  hotelId : string;
+  hotelId;
 
   constructor(private fb: FormBuilder,private router: Router, private route : ActivatedRoute,private _hotelservice : HotelService ) { }
 

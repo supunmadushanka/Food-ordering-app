@@ -1,0 +1,13 @@
+<div class="form">
+    {{addReview.value | json}}
+    <form class="example-form" [formGroup]="addReview" (ngSubmit)="reviewsubmit()">
+
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Add review</mat-label>
+            <input matInput placeholder="Ex. Food is fine" formControlName="review">
+        </mat-form-field>
+
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+    </form>
+</div>
