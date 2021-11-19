@@ -33,6 +33,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AddItemComponent } from './components/add-item/add-item.component';
 import { UpdateHotelCardComponent } from './components/hotel-card/update-hotel-card/update-hotel-card.component';
 import { ForgotPasswordComponent } from './components/login/forgot-password/forgot-password.component';
+import { ReviewsComponent } from './components/reviews/reviews.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ForgotPasswordComponent } from './components/login/forgot-password/forg
     LoginComponent,
     AddItemComponent,
     UpdateHotelCardComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ReviewsComponent
   ],
   imports: [
     BrowserModule,

@@ -142,6 +142,10 @@ export class HotelService {
     return this._id;
   }
 
+  public getUserId(){
+    return this.userId;
+  }
+
   public setUserName = (name) => {
     this.userNameChange.next(name);
   }

@@ -11,7 +11,7 @@
   </div>
   <mat-card-content>
     <p>Rating: <span class="rating-star">{{'★'.repeat(math.round(rating))}}</span></p>
-    <p>Review: {{review}}</p>
+    <p>Review: {{review}}&nbsp;&nbsp;<button class="review" (click)="goToReview()">View>></button></p>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="warn" (click)="goToHotel()">Order Now</button>

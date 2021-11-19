@@ -48,4 +48,9 @@ export class HotelCardComponent implements OnInit {
     this.router.navigate(['/hotels', this.Id])
   }
 
+  goToReview() {
+    this._hotelService.setHotelId(this.hotelId);
+    this.router.navigate(['/review'])
+  }
+
 }
