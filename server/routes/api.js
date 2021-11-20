@@ -3,6 +3,8 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/user');
 const Hotel = require('../models/hotel');
+const Review = require('../models/review');
+
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const verifyToken = require('./verifyToken');
@@ -119,6 +121,15 @@ router.get('/hotels/:hotelId', verifyToken, async (req, res) => {
     }
 });
 
+router.get('/getuser/:userId', verifyToken, async (req, res) => {
+    try {
+        const user = await User.findOne({ _id: req.params.userId });
+        res.json(user);
+    } catch (err) {
+        res.status(404).send(`Unable to process your request - ${err}`);
+    }
+});
+
 router.get('/order/:userId', verifyToken, async (req, res) => {
 
     const user = await User.findById(req.params.userId);
@@ -147,7 +158,7 @@ router.delete('/orderDelete/:userId/:orderId', verifyToken, async (req, res) => 
         {
             $pull: {
                 orders: {
-                    _id : req.params.orderId
+                    _id: req.params.orderId
                 }
             }
         },
@@ -250,7 +261,7 @@ router.post('/addItem/:hotelId', verifyToken, async (req, res) => {
 
     const hotel = await Hotel.findById(req.params.hotelId);
     if (!hotel) return res.status(400).send("User doesn't exist!");
-    console.log(req.body);
+
     User.updateOne(
         { _id: req.params.hotelId },
         {
@@ -267,6 +278,66 @@ router.post('/addItem/:hotelId', verifyToken, async (req, res) => {
             }
         }
     )
+});
+
+router.post('/addreview', async (req, res) => {
+    let userData = req.body;
+
+    // create a new review
+    const newReview = new Review({
+        hotelId: req.body.hotelId,
+        userId: req.body.userId,
+        userName: req.body.userName,
+        review: req.body.review
+    });
+
+    // save to the db
+    newReview.save((err, doc) => {
+        if (err) {
+            return res.status(422).send(['Save failed !']);
+        } else {
+            return res.status(200).send(['Department Aded !']);
+        }
+    })
+
+});
+
+router.get('/getreview/:hotelId', verifyToken, async (req, res) => {
+    try {
+        const reviews = await Review.find({ hotelId: req.params.hotelId });
+        res.json(reviews);
+    } catch (err) {
+        res.status(404).send(`Unable to process your request - ${err}`);
+    }
+});
+
+router.delete('/deleteReview/:reviewId', verifyToken, async (req, res) => {
+    Review.deleteOne({ _id: req.params.reviewId },
+        (err, rew) => {
+            if (!rew)
+                return res.status(404).send(['Review Not Exist !']);
+            else {
+                return res.status(200).json({ message: 'Review removed !' });
+            }
+        })
+});
+
+router.put('/updateReview/:reviewId', async (req, res) => {
+
+    Review.findOne({ _id: req.params.reviewId },
+        (err, review) => {
+            if (!review)
+                return res.status(404).send(['Review Not Exist !']);
+            else {
+                review.updateOne({ review: req.body.review }, function (err, doc) {
+                    if (err) {
+                        return res.status(422).send(['Eror from backend !']);
+                    } else {
+                        return res.status(200).send(['Review updated to list!']);
+                    }
+                })
+            }
+        })
 });
 
 module.exports = router;

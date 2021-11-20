@@ -76,6 +76,7 @@ export class AuthService {
     localStorage.removeItem('order-my-food-username');
     localStorage.removeItem('order-my-food-email');
     localStorage.removeItem('order-my-food-userId');
+    localStorage.removeItem('hotel_id');
     this._router.navigateByUrl('/login');
   }
 
