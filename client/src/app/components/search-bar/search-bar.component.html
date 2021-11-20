@@ -1,5 +1,5 @@
 <mat-form-field>
-    <mat-label>Search</mat-label>
+    <mat-label>Search Your Hotel</mat-label>
     <input matInput type="text" [(ngModel)]="hotelSearch" (ngModelChange)="searchQuery($event)" autocomplete="off">
     <button mat-button *ngIf="hotelSearch" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
         <mat-icon>close</mat-icon>

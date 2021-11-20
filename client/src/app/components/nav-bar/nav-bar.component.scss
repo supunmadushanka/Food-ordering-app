@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #1838c5;
+    background: #2023b3d5;
     .logo {
         margin-left: 1%;
     }
@@ -13,6 +13,7 @@
         align-items: center;
         .greetings {
             font-size: 23px;
+            font-weight: bold;
             margin-right: 10px;
         }
     }
