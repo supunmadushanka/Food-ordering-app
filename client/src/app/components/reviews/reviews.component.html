@@ -1,19 +1,26 @@
-<div class="form">
-    <form class="example-form" [formGroup]="addReview" (ngSubmit)="reviewsubmit()">
+<app-nav-bar></app-nav-bar>
+<div class="hotel-container">
+    <div class="menu-bar">
+        <h3 class="tagline">Add Review</h3>
+    </div>
+    <div class="form">
+        <form class="example-form" [formGroup]="addReview" (ngSubmit)="reviewsubmit()">
 
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Add review</mat-label>
-            <input matInput placeholder="Ex. Food is fine" formControlName="review">
-        </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Add review</mat-label>
+                <input matInput placeholder="Ex. Food is fine" formControlName="review">
+            </mat-form-field>
 
-        <button type="submit">Submit</button>&nbsp;
-        <button type="reset">Reset</button>
-    </form>
-</div>
-<div>
-    <div class="div-border" *ngFor="let review of reviews">
-        <div class="name">{{review.userName}}</div><div class="content">{{review.review}}</div>
-        <button (click)="whenClick(review._id,review.review)">update</button>&nbsp;
-        <button (click)="reviewDelete(review._id)">Delete</button>
+            <button type="submit">Submit</button>&nbsp;
+            <button type="reset">Reset</button>
+        </form>
+    </div>
+    <div>
+        <div class="div-border" *ngFor="let review of reviews">
+            <div class="name">{{review.userName}}</div>
+            <div class="content">{{review.review}}</div>
+            <button (click)="whenClick(review._id,review.review)">update</button>&nbsp;
+            <button (click)="reviewDelete(review._id)">Delete</button>
+        </div>
     </div>
 </div>

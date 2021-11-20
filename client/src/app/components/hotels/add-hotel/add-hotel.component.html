@@ -5,8 +5,7 @@
     </div>
 
     <div class="form">
-        <!--{{updateHotel.value | json}}-->
-        <form class="example-form" [formGroup]="updateHotel" (ngSubmit)="itemsubmit()">
+        <form class="example-form" [formGroup]="addHotel" (ngSubmit)="hotelsubmit()">
 
             <mat-form-field class="example-full-width" appearance="fill">
                 <mat-label>Hotel name</mat-label>
@@ -24,10 +23,10 @@
             </mat-form-field>
 
 
-            <input type="file" name="image" placeholder="Ex. Rs. 1000" multiple (change)="selectImage($event)"><br><br>
+            Image : <input type="file" name="image" placeholder="Ex. Rs. 1000" multiple (change)="selectImage($event)"><br><br>
 
 
-            <button type="submit" mat-raised-button color="primary">Submit</button>
+            <button type="submit" [disabled]="addHotel.invalid" mat-raised-button color="primary">Submit</button>
             <button type="reset" mat-raised-button color="accent">Reset</button>
         </form>
     </div>
