@@ -12,11 +12,26 @@ export class UpdateHotelCardComponent implements OnInit {
 
   hotelId
   images
+  public hotel : any = [];
+  name :string
+  address :string
+  cuisines : string
 
-  constructor(private formBuilder: FormBuilder,private fb: FormBuilder,private router: Router, private route : ActivatedRoute,private _hotelservice : HotelService) { }
+  constructor(private fb: FormBuilder,private router: Router, private route : ActivatedRoute,private _hotelservice : HotelService) { }
 
   ngOnInit(): void {
-
+    this.hotelId=this._hotelservice.getHotelId();
+    this._hotelservice.getHotelById(this.hotelId)
+      .subscribe((data) => {
+        this.hotel = data;
+        this.name = data.name;
+        this.address = data.address;
+        this.cuisines = data.cuisines;
+      },
+        error => {
+          console.error('error', error)
+        }
+      )
   }
 
   updateHotel = this.fb.group({

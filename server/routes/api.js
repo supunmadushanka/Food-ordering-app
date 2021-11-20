@@ -121,6 +121,15 @@ router.get('/hotels/:hotelId', verifyToken, async (req, res) => {
     }
 });
 
+router.get('/hotel/:hotelId', verifyToken, async (req, res) => {
+    try {
+        const hotel = await Hotel.findOne({ _id: req.params.hotelId });
+        res.json(hotel);
+    } catch (err) {
+        res.status(404).send(`Unable to process your request - ${err}`);
+    }
+});
+
 router.get('/getuser/:userId', verifyToken, async (req, res) => {
     try {
         const user = await User.findOne({ _id: req.params.userId });

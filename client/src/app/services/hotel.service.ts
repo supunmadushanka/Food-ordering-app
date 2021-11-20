@@ -14,6 +14,7 @@ import { IOrder } from '../models/order';
 export class HotelService {
 
   private url: string = (environment.baseURL) ? `${environment.baseURL}api/hotels` : 'api/hotels';
+  private urlhotel: string = (environment.baseURL) ? `${environment.baseURL}api/hotel` : 'api/hotel';
   private orderURL: string = (environment.baseURL) ? `${environment.baseURL}api/order` : 'api/order';
   private itemURL: string = (environment.baseURL) ? `${environment.baseURL}api/addItem` : 'api/addItem';
   private hotelDelete: string = (environment.baseURL) ? `${environment.baseURL}api/deleteHotel` : 'api/deleteHotel';
@@ -71,7 +72,17 @@ export class HotelService {
   }
 
   public getHotel = (hotelId: string): Observable<IHotel> => {
+    console.log(hotelId)
     return this.httpClient.get<IHotel>(`${this.url}/${hotelId}`).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err || this.customError);
+      })
+    );
+  }
+
+  public getHotelById = (hotelId: string): Observable<IHotel> => {
+    console.log(hotelId)
+    return this.httpClient.get<IHotel>(`${this.urlhotel}/${hotelId}`).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err || this.customError);
       })
