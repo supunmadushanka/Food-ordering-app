@@ -17,6 +17,7 @@ export class ReviewService {
   private reviewAdd: string = (environment.baseURL) ? `${environment.baseURL}api/addreview` : 'api/addreview';
   private reviewsGet: string = (environment.baseURL) ? `${environment.baseURL}api/getreview` : 'api/getreview';
   private reviewsDelete: string = (environment.baseURL) ? `${environment.baseURL}api/deleteReview` : 'api/deleteReview';
+  private reviewsUpdate: string = (environment.baseURL) ? `${environment.baseURL}api/updateReview` : 'api/updateReview';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -38,6 +39,14 @@ export class ReviewService {
 
   public deleteReview = (reviewId): Observable<any> => {
     return this.httpClient.delete<any>(`${this.reviewsDelete}/${reviewId}`).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err || this.customError);
+      })
+    );
+  }
+
+  public updateReview = (reviewId,formData): Observable<any> => {
+    return this.httpClient.put<any>(`${this.reviewsUpdate}/${reviewId}`,formData).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err || this.customError);
       })

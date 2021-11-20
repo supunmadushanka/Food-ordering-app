@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service'
 import { ReviewService } from '../../services/review.service'
 import { FormBuilder, Validators } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router'
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-reviews',
@@ -17,6 +18,16 @@ export class ReviewsComponent implements OnInit {
   username: any
   public user = [];
   public reviews = [];
+  updatedReview
+  reviewId
+  review
+
+  customError = (statusText, statusMessage) => {
+    return {
+      statusText: statusText,
+      message: statusMessage
+    }
+  }
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private _hotelService: HotelService
     , private _userService: UserService, private _reviewService: ReviewService) { }
@@ -72,17 +83,54 @@ export class ReviewsComponent implements OnInit {
       )
   }
 
-  reviewDelete(reviewId){
+  reviewDelete(reviewId) {
     this._reviewService.deleteReview(reviewId)
-    .subscribe(
-      response => {
-        console.log('success', response);
-        this.ngOnInit();
-      },
-      error => {
-        console.error('error', error)
+      .subscribe(
+        response => {
+          console.log('success', response);
+          this.ngOnInit();
+        },
+        error => {
+          console.error('error', error)
+        }
+      )
+  }
+
+  whenClick(reviewId,review) {
+    this.reviewId = reviewId;
+    this.review = review;
+    this.openLoginModal();
+  }
+
+  openLoginModal = async () => {
+    await Swal.fire({
+      title: 'Update the review',
+      html:
+        '<input id="review" type="text" class="swal2-input" value="'+this.review+'">',
+      focusConfirm: false,
+      confirmButtonColor: '#1838c5',
+      allowOutsideClick: true,
+      allowEscapeKey: true,
+      preConfirm: () => {
+        this.updatedReview = {
+          review: (document.getElementById('review') as HTMLInputElement).value
+        }
       }
-    )
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.close();
+        this._reviewService.updateReview(this.reviewId,this.updatedReview).subscribe(
+          (res) => {
+            console.log('success',res)
+            this.ngOnInit();
+          },
+          error=>{
+            console.error('error',error)
+          }
+        )
+
+      }
+    })
   }
 
 

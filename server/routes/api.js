@@ -322,4 +322,22 @@ router.delete('/deleteReview/:reviewId', verifyToken, async (req, res) => {
         })
 });
 
+router.put('/updateReview/:reviewId', async (req, res) => {
+
+    Review.findOne({ _id: req.params.reviewId },
+        (err, review) => {
+            if (!review)
+                return res.status(404).send(['Review Not Exist !']);
+            else {
+                review.updateOne({ review: req.body.review }, function (err, doc) {
+                    if (err) {
+                        return res.status(422).send(['Eror from backend !']);
+                    } else {
+                        return res.status(200).send(['Review updated to list!']);
+                    }
+                })
+            }
+        })
+});
+
 module.exports = router;
