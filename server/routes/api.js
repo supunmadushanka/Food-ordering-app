@@ -303,14 +303,23 @@ router.post('/addreview', async (req, res) => {
 });
 
 router.get('/getreview/:hotelId', verifyToken, async (req, res) => {
-    console.log(req.params.hotelId)
     try {
         const reviews = await Review.find({ hotelId: req.params.hotelId });
         res.json(reviews);
-        console.log(reviews)
     } catch (err) {
         res.status(404).send(`Unable to process your request - ${err}`);
     }
+});
+
+router.delete('/deleteReview/:reviewId', verifyToken, async (req, res) => {
+    Review.deleteOne({ _id: req.params.reviewId },
+        (err, rew) => {
+            if (!rew)
+                return res.status(404).send(['Review Not Exist !']);
+            else {
+                return res.status(200).json({ message: 'Review removed !' });
+            }
+        })
 });
 
 module.exports = router;

@@ -1,5 +1,4 @@
 <div class="form">
-    {{addReview.value | json}}
     <form class="example-form" [formGroup]="addReview" (ngSubmit)="reviewsubmit()">
 
         <mat-form-field class="example-full-width" appearance="fill">
@@ -7,12 +6,14 @@
             <input matInput placeholder="Ex. Food is fine" formControlName="review">
         </mat-form-field>
 
-        <button type="submit">Submit</button>
+        <button type="submit">Submit</button>&nbsp;
         <button type="reset">Reset</button>
     </form>
 </div>
 <div>
-    <div *ngFor="let review of reviews">
-        <div>{{review.userName}}-{{review.review}}</div>
+    <div class="div-border" *ngFor="let review of reviews">
+        <div class="name">{{review.userName}}</div><div class="content">{{review.review}}</div>
+        <button>update</button>&nbsp;
+        <button (click)="reviewDelete(review._id)">Delete</button>
     </div>
 </div>

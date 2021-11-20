@@ -48,7 +48,7 @@ export class ReviewsComponent implements OnInit {
   }
 
   addReview = this.fb.group({
-    review: ['', [Validators.required]],
+    review: [''],
     hotelId: ['', [Validators.required]],
     userId: ['', [Validators.required,]],
     userName: ['', [Validators.required]],
@@ -62,12 +62,27 @@ export class ReviewsComponent implements OnInit {
     this._reviewService.addReview(this.addReview.value)
       .subscribe(
         response => {
-          console.log('success', response)
+          console.log('success', response);
+          this.addReview.reset();
+          this.ngOnInit();
         },
         error => {
           console.error('error', error)
         }
       )
+  }
+
+  reviewDelete(reviewId){
+    this._reviewService.deleteReview(reviewId)
+    .subscribe(
+      response => {
+        console.log('success', response);
+        this.ngOnInit();
+      },
+      error => {
+        console.error('error', error)
+      }
+    )
   }
 
 

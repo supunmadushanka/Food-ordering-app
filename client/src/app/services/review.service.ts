@@ -16,6 +16,7 @@ export class ReviewService {
 
   private reviewAdd: string = (environment.baseURL) ? `${environment.baseURL}api/addreview` : 'api/addreview';
   private reviewsGet: string = (environment.baseURL) ? `${environment.baseURL}api/getreview` : 'api/getreview';
+  private reviewsDelete: string = (environment.baseURL) ? `${environment.baseURL}api/deleteReview` : 'api/deleteReview';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -29,6 +30,14 @@ export class ReviewService {
 
   public getReviews = (hotelId: string): Observable<any> => {
     return this.httpClient.get<any>(`${this.reviewsGet}/${hotelId}`).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err || this.customError);
+      })
+    );
+  }
+
+  public deleteReview = (reviewId): Observable<any> => {
+    return this.httpClient.delete<any>(`${this.reviewsDelete}/${reviewId}`).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err || this.customError);
       })
