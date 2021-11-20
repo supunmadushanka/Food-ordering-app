@@ -41,7 +41,6 @@ export class AddHotelComponent implements OnInit {
     .subscribe(
       response=>{
         console.log('Success!', response);
-        this.router.navigate(['/hotels']);
       },
       error=>{
         console.error('Error!', error)
@@ -59,7 +58,7 @@ export class AddHotelComponent implements OnInit {
       response=>{
         console.log('Success!', response);
         this.addHotel.reset();
-        //this.imageSubmit(this.hotelId);
+        this.imageSubmit(response._id);
         this.router.navigate(['/hotels']);
       },
       error=>{

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HotelService } from '../../services/hotel.service';
-import { Router } from '@angular/router';
+import { Router ,ActivatedRoute} from '@angular/router';
 import { ISortOption } from '../../models/sort-option';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
@@ -23,7 +23,11 @@ export class HotelsComponent implements OnInit {
 
   selectedValue = this.sortOptions[0].value; // default sorting
 
-  constructor(private _hotelService: HotelService, private router: Router) { }
+  constructor(private _hotelService: HotelService, private router: Router, private route : ActivatedRoute) {
+    route.params.subscribe(val => {
+      this.ngOnInit();
+    });
+   }
 
   inputName = async() => {
     await Swal.fire({

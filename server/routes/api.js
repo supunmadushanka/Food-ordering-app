@@ -121,6 +121,15 @@ router.get('/hotels/:hotelId', verifyToken, async (req, res) => {
     }
 });
 
+router.get('/hotel/:hotelId', verifyToken, async (req, res) => {
+    try {
+        const hotel = await Hotel.findOne({ _id: req.params.hotelId });
+        res.json(hotel);
+    } catch (err) {
+        res.status(404).send(`Unable to process your request - ${err}`);
+    }
+});
+
 router.get('/getuser/:userId', verifyToken, async (req, res) => {
     try {
         const user = await User.findOne({ _id: req.params.userId });
@@ -233,6 +242,28 @@ router.put('/updateImage/:hotelId', upload.single('file'), (req, res, next) => {
             })
     }
 })
+
+router.post('/addHotel', async (req, res) => {
+
+    // create a new review
+    const newHotel = new Hotel({
+        name: req.body.name,
+        address: req.body.address,
+        cuisines: req.body.cuisines,
+        rating: req.body.rating,
+        reviews: req.body.reviews
+    });
+
+    // save to the db
+    newHotel.save((err, doc) => {
+        if (err) {
+            return res.status(422).send(['Save failed !']);
+        } else {
+            return res.status(200).send(doc);
+        }
+    })
+
+});
 
 router.post('/order/:userId', verifyToken, async (req, res) => {
 
