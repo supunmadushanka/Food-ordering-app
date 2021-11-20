@@ -234,6 +234,28 @@ router.put('/updateImage/:hotelId', upload.single('file'), (req, res, next) => {
     }
 })
 
+router.post('/addHotel', async (req, res) => {
+
+    // create a new review
+    const newHotel = new Hotel({
+        name: req.body.name,
+        address: req.body.address,
+        cuisines: req.body.cuisines,
+        rating: req.body.rating,
+        reviews: req.body.reviews
+    });
+
+    // save to the db
+    newHotel.save((err, doc) => {
+        if (err) {
+            return res.status(422).send(['Save failed !']);
+        } else {
+            return res.status(200).send(doc);
+        }
+    })
+
+});
+
 router.post('/order/:userId', verifyToken, async (req, res) => {
 
     const user = await User.findById(req.params.userId);
