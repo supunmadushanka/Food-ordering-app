@@ -1,28 +1,28 @@
-import { Component, OnInit ,ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators ,FormGroup} from '@angular/forms'
 import { Router,ActivatedRoute } from '@angular/router'
 import {HotelService} from '../../../services/hotel.service'
 
 @Component({
-  selector: 'app-update-hotel-card',
-  templateUrl: './update-hotel-card.component.html',
-  styleUrls: ['./update-hotel-card.component.scss']
+  selector: 'app-add-hotel',
+  templateUrl: './add-hotel.component.html',
+  styleUrls: ['./add-hotel.component.scss']
 })
-export class UpdateHotelCardComponent implements OnInit {
+export class AddHotelComponent implements OnInit {
 
-  hotelId
   images
 
   constructor(private formBuilder: FormBuilder,private fb: FormBuilder,private router: Router, private route : ActivatedRoute,private _hotelservice : HotelService) { }
 
   ngOnInit(): void {
-
   }
 
-  updateHotel = this.fb.group({
-    name: [''],
-    address: [''],
-    cuisines: ['']
+  addHotel = this.fb.group({
+    name: ['',[Validators.required]],
+    address: ['', [Validators.required]],
+    cuisines: ['', [Validators.required]],
+    rating: [''],
+    reviews: ['']
   })
 
   selectImage(event) {
@@ -50,13 +50,16 @@ export class UpdateHotelCardComponent implements OnInit {
 
   }
 
-  itemsubmit(){
-    this.hotelId=this._hotelservice.getHotelId();
-    this.imageSubmit(this.hotelId);
-    this._hotelservice.updateHotel(this.hotelId,this.updateHotel.value)
+  hotelsubmit(){
+    this.addHotel.value.rating = '4.0';
+    this.addHotel.value.reviews = '500';
+    console.log(this.addHotel.value);
+    this._hotelservice.addHotel(this.addHotel.value)
     .subscribe(
       response=>{
         console.log('Success!', response);
+        this.addHotel.reset();
+        //this.imageSubmit(this.hotelId);
         this.router.navigate(['/hotels']);
       },
       error=>{

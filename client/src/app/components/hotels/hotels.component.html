@@ -18,7 +18,9 @@
             </h3>
         </div>
     </div>
-    <button mat-raised-button color="primary">Add New Restaurant</button>
+
+    <button mat-raised-button color="primary" routerLink="/addhotel">Add New Restaurant</button>
+
     <div class="hotel-cards">
         <div *ngFor="let hotel of hotels" class="hotel">
             <app-hotel-card [Id]="hotel.id" [hotelId]="hotel._id" [hotelName]="hotel.name" [hotelThumbnail]="hotel.thumbnail_image" [hotelImage]="hotel.feature_image"

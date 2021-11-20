@@ -18,6 +18,7 @@ export class HotelService {
   private itemURL: string = (environment.baseURL) ? `${environment.baseURL}api/addItem` : 'api/addItem';
   private hotelDelete: string = (environment.baseURL) ? `${environment.baseURL}api/deleteHotel` : 'api/deleteHotel';
   private hotelUpdate: string = (environment.baseURL) ? `${environment.baseURL}api/updateHotel` : 'api/updateHotel';
+  private hotelAdd: string = (environment.baseURL) ? `${environment.baseURL}api/addHotel` : 'api/addHotel';
   private imageUpdate: string = (environment.baseURL) ? `${environment.baseURL}api/updateImage` : 'api/updateImage';
   private orderDelete: string = (environment.baseURL) ? `${environment.baseURL}api/orderDelete` : 'api/orderDelete';
 
@@ -111,6 +112,14 @@ export class HotelService {
 
   public updateImage = (updateHotel,hotelId): Observable<any> => {
     return this.httpClient.put<any>(`${this.imageUpdate}/${hotelId}`,updateHotel).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err || this.customError);
+      })
+    );
+  }
+
+  public addHotel = (model): Observable<any> => {
+    return this.httpClient.post<any>(this.hotelAdd, model).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err || this.customError);
       })
