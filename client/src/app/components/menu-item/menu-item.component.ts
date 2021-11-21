@@ -3,7 +3,6 @@ import { MenuService } from '../../services/menu.service'
 import { FormBuilder, Validators } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router'
 import { HotelService } from '../../services/hotel.service'
-
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({

@@ -36,8 +36,8 @@ export class MenuService {
     );
   }
 
-  public updateMenu = (menuId,formData): Observable<any> => {
-    return this.httpClient.put<any>(`${this.menuUpdate}/${menuId}`,formData).pipe(
+  public updateMenu = (formData,itemId,hotelId): Observable<any> => {
+    return this.httpClient.put<any>(`${this.menuUpdate}/${itemId}/${hotelId}`,formData).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err || this.customError);
       })
