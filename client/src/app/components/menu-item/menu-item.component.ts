@@ -20,4 +20,8 @@ export class MenuItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  deleteItem(id){
+    alert(id)
+  }
+
 }
