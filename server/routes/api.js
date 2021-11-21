@@ -371,4 +371,28 @@ router.put('/updateReview/:reviewId', async (req, res) => {
         })
 });
 
+router.delete('/deleteMenu/:menuId/:hotelId', verifyToken, async (req, res) => {
+    const hotel = await Hotel.findById(req.params.hotelId);
+    if (!hotel) return res.status(400).send("hotel doesn't exist!");
+
+    Hotel.updateOne(
+        { _id: req.params.hotelId },
+        {
+            $pull: {
+                menu: {
+                    id: req.params.menuId
+                }
+            }
+        },
+        function (err, success) {
+            if (err) {
+                return res.status(500).send(err)
+            }
+            else {
+                return res.status(200).send(success);
+            }
+        }
+    )
+});
+
 module.exports = router;

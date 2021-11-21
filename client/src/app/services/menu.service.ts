@@ -28,8 +28,8 @@ export class MenuService {
     );
   }
 
-  public deleteMenu = (menuId): Observable<any> => {
-    return this.httpClient.delete<any>(`${this.menuDelete}/${menuId}`).pipe(
+  public deleteMenu = (menuId,hotelId): Observable<any> => {
+    return this.httpClient.delete<any>(`${this.menuDelete}/${menuId}/${hotelId}`).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err || this.customError);
       })
