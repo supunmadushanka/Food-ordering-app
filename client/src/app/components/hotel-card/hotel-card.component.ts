@@ -13,7 +13,6 @@ export class HotelCardComponent implements OnInit {
   @Input() public Id;
   @Input() public hotelName;
   @Input() public hotelThumbnail;
-  @Input() public hotelImage;
   @Input() public cuisines;
   @Input() public rating;
   @Input() public review;
@@ -46,6 +45,7 @@ export class HotelCardComponent implements OnInit {
 
   goToHotel() {
     this.router.navigate(['/hotels', this.Id])
+    this._hotelService.setHotelId(this.hotelId);
   }
 
   goToReview() {

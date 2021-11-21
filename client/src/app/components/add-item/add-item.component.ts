@@ -16,7 +16,6 @@ export class AddItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.hotelId=this._hotelservice.getHotelId();
-    alert(this.hotelId);
   }
 
   addItem = this.fb.group({
@@ -32,7 +31,6 @@ export class AddItemComponent implements OnInit {
 
   itemsubmit(){
     this.addItem.value.id = this.randomIntFromInterval(1, 1000);
-    alert(this.addItem.value.id)
     this._hotelservice.addItem(this.addItem.value,this.hotelId)
     .subscribe(
       response=>{

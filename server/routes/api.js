@@ -148,6 +148,7 @@ router.get('/order/:userId', verifyToken, async (req, res) => {
 });
 
 router.delete('/deleteHotel/:hotelId', verifyToken, async (req, res) => {
+    console.log(req.params.hotelId)
     Hotel.deleteOne({ _id: req.params.hotelId },
         (err, dep) => {
             if (!dep)
@@ -159,6 +160,7 @@ router.delete('/deleteHotel/:hotelId', verifyToken, async (req, res) => {
 });
 
 router.delete('/orderDelete/:userId/:orderId', verifyToken, async (req, res) => {
+
     const user = await User.findById(req.params.userId);
     if (!user) return res.status(400).send("User doesn't exist!");
 
@@ -247,6 +249,7 @@ router.post('/addHotel', async (req, res) => {
 
     // create a new review
     const newHotel = new Hotel({
+        id:req.body.id,
         name: req.body.name,
         address: req.body.address,
         cuisines: req.body.cuisines,
@@ -292,12 +295,18 @@ router.post('/addItem/:hotelId', verifyToken, async (req, res) => {
 
     const hotel = await Hotel.findById(req.params.hotelId);
     if (!hotel) return res.status(400).send("User doesn't exist!");
+    console.log(req.body)
 
     User.updateOne(
         { _id: req.params.hotelId },
         {
             $push: {
-                menu: req.body
+                menu: {
+                    "id": req.body.id,
+                    "name": req.body.name,
+                    "desc": req.body.desc,
+                    "price": req.body.price
+                }
             }
         },
         function (err, success) {
@@ -367,6 +376,92 @@ router.put('/updateReview/:reviewId', async (req, res) => {
                         return res.status(200).send(['Review updated to list!']);
                     }
                 })
+            }
+        })
+});
+
+router.delete('/deleteMenu/:menuId/:hotelId', verifyToken, async (req, res) => {
+    const hotel = await Hotel.findById(req.params.hotelId);
+    if (!hotel) return res.status(400).send("Hotel doesn't exist!");
+
+    Hotel.updateOne(
+        { _id: req.params.hotelId },
+        {
+            $pull: {
+                menu: {
+                    id: req.params.menuId
+                }
+            }
+        },
+        function (err, success) {
+            if (err) {
+                return res.status(500).send(err)
+            }
+            else {
+                return res.status(200).send(success);
+            }
+        }
+    )
+});
+
+router.put('/updateMenu/:itemId/:hotelId', verifyToken, async (req, res) => {
+    Hotel.findOne({ _id: req.params.hotelId },
+        (err, hotel) => {
+            if (!hotel)
+                return res.status(404).send(['Department Not Exist !']);
+            else {
+                if (req.body.name) {
+                    Hotel.updateOne(
+                        { "_id": req.params.hotelId,
+                            "menu.id" : req.params.itemId
+                        },
+                        {
+                            "$set": {
+                                "menu.$.name":req.body.name
+                            }
+                        },
+                        function (err, success) {
+                            if (err) {
+                                return res.status(500).send(err)
+                            }
+                        }
+                    )
+                }
+                if (req.body.desc) {
+                    Hotel.updateOne(
+                        { "_id": req.params.hotelId,
+                            "menu.id" : req.params.itemId
+                        },
+                        {
+                            "$set": {
+                                "menu.$.desc":req.body.desc
+                            }
+                        },
+                        function (err, success) {
+                            if (err) {
+                                return res.status(500).send(err)
+                            }
+                        }
+                    )
+                }
+                if (req.body.price) {
+                    Hotel.updateOne(
+                        { "_id": req.params.hotelId,
+                            "menu.id" : req.params.itemId
+                        },
+                        {
+                            "$set": {
+                                "menu.$.price":req.body.price
+                            }
+                        },
+                        function (err, success) {
+                            if (err) {
+                                return res.status(500).send(err)
+                            }
+                        }
+                    )
+                }
+                return res.status(200).send(success);
             }
         })
 });

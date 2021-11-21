@@ -18,6 +18,7 @@ export class AddHotelComponent implements OnInit {
   }
 
   addHotel = this.fb.group({
+    id: [''],
     name: ['',[Validators.required]],
     address: ['', [Validators.required]],
     cuisines: ['', [Validators.required]],
@@ -30,6 +31,10 @@ export class AddHotelComponent implements OnInit {
       const file = event.target.files[0];
       this.images = file;
     }
+  }
+
+  randomIntFromInterval(min, max) { 
+    return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
 
@@ -52,6 +57,7 @@ export class AddHotelComponent implements OnInit {
   hotelsubmit(){
     this.addHotel.value.rating = '4.0';
     this.addHotel.value.reviews = '500';
+    this.addHotel.value.id = this.randomIntFromInterval(1, 100000);
     console.log(this.addHotel.value);
     this._hotelservice.addHotel(this.addHotel.value)
     .subscribe(

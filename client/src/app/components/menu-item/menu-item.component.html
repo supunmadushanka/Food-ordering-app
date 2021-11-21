@@ -3,11 +3,15 @@
     <mat-card class="menu" *ngFor="let menu of hotel.menu">
         <mat-card-header>
             <mat-card-title>{{menu.name}}</mat-card-title>
+            <div class="updel">
+                <button (click)="deleteItem(menu.id)">Delete</button>&nbsp;
+                <button [routerLink]="['/updateitem',menu.id]">Update</button>
+            </div>
         </mat-card-header>
         <mat-card-content>
-        <p>
-            {{menu.desc}}
-        </p>
+            <p>
+                {{menu.desc}}
+            </p>
         </mat-card-content>
         <mat-card-actions>
             <span>Rs. {{menu.price}}</span>

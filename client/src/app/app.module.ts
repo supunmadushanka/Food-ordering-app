@@ -35,6 +35,7 @@ import { UpdateHotelCardComponent } from './components/hotel-card/update-hotel-c
 import { ForgotPasswordComponent } from './components/login/forgot-password/forgot-password.component';
 import { ReviewsComponent } from './components/reviews/reviews.component';
 import { AddHotelComponent } from './components/hotels/add-hotel/add-hotel.component';
+import { UpdateItemComponent } from './components/menu-item/update-item/update-item.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { AddHotelComponent } from './components/hotels/add-hotel/add-hotel.compo
     UpdateHotelCardComponent,
     ForgotPasswordComponent,
     ReviewsComponent,
-    AddHotelComponent
+    AddHotelComponent,
+    UpdateItemComponent
   ],
   imports: [
     BrowserModule,
