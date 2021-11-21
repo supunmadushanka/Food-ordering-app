@@ -1,22 +1,27 @@
-<div class="form">
-    {{addItem.value | json}}
-    <form class="example-form" [formGroup]="addItem" (ngSubmit)="itemsubmit()">
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Food name</mat-label>
-            <input matInput placeholder="Ex. Pizza" formControlName="name">
-        </mat-form-field>
+<app-nav-bar></app-nav-bar>
+<div class="hotel-container">
+    <div class="menu-bar">
+        <h3 class="tagline">Update Menu Item</h3>
+    </div>
+    <div class="form">
+        <form class="example-form" [formGroup]="addItem" (ngSubmit)="itemsubmit()">
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Food name</mat-label>
+                <input matInput value="{{name}}" formControlName="name">
+            </mat-form-field>
 
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Description</mat-label>
-            <input matInput placeholder="Ex. With chicken" formControlName="desc">
-        </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Description</mat-label>
+                <input matInput value="{{desc}}" formControlName="desc">
+            </mat-form-field>
 
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Price</mat-label>
-            <input matInput placeholder="Ex. Rs. 1000" formControlName="price">
-        </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Price</mat-label>
+                <input matInput value="{{price}}" formControlName="price">
+            </mat-form-field>
 
-        <button type="submit">Submit</button>
-        <button type="reset">Reset</button>
-    </form>
+            <button type="submit">Submit</button>
+            <button type="reset">Reset</button>
+        </form>
+    </div>
 </div>

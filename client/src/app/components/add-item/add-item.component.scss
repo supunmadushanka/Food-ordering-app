@@ -7,3 +7,42 @@
   .example-full-width {
     width: 100%;
   }
+
+  @media only screen and (max-width: 600px)  {
+    .menu-bar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .tagline {
+            font-size: 20px !important;
+        }
+        .filters {
+            display: flex;
+        }
+    }
+  
+  }
+  
+  .hotel-container{
+    background: #e8dada;
+    height: 637px;
+    .menu-bar {
+        background: rgb(90, 168, 219);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .tagline {
+            font-size: 27px;
+            padding-left: 1%;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+        .filters {
+            padding: 1%;
+            app-search-bar {
+                margin-right: 35px;
+            }
+        }
+        
+    }
+  }
