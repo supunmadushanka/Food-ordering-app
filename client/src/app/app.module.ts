@@ -36,6 +36,7 @@ import { ForgotPasswordComponent } from './components/login/forgot-password/forg
 import { ReviewsComponent } from './components/reviews/reviews.component';
 import { AddHotelComponent } from './components/hotels/add-hotel/add-hotel.component';
 import { UpdateItemComponent } from './components/menu-item/update-item/update-item.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { UpdateItemComponent } from './components/menu-item/update-item/update-i
     ForgotPasswordComponent,
     ReviewsComponent,
     AddHotelComponent,
-    UpdateItemComponent
+    UpdateItemComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
