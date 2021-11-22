@@ -74,6 +74,19 @@ export class HotelComponent implements OnInit, AfterViewInit {
     }
   }
 
+  saveCart(){
+    console.log(this.cartItems);
+    this._hotelService.saveCart(this.cartItems,this.userId)
+    .subscribe(
+      response=>{
+        console.log('success',response)
+      },
+      err=>{
+        console.error('error',err)
+      }
+    )
+  }
+
   addItemToMyCart = (newItem) => {
     this._hotelService.setCartItem(newItem);
     this.cartItems = this._hotelService.cartItems;
@@ -247,6 +260,16 @@ export class HotelComponent implements OnInit, AfterViewInit {
       (data) => {
         this._hotelService.setOrderHistory(data);
         this.ordersHistory = this._hotelService.orderHistory;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+
+    this._hotelService.getCart(this.userId).subscribe(
+      (data) => {
+        this._hotelService.setCartSaved(data);
+        this.cartItems = this._hotelService.cartItems;
       },
       (err) => {
         console.log(err);
