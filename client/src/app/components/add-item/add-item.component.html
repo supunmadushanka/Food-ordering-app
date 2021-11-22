@@ -1,5 +1,9 @@
+<app-nav-bar></app-nav-bar>
+<div class="hotel-container">
+    <div class="menu-bar">
+        <h3 class="tagline">Add Menu Item</h3>
+    </div>
 <div class="form">
-    {{addItem.value | json}}
     <form class="example-form" [formGroup]="addItem" (ngSubmit)="itemsubmit()">
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Food name</mat-label>
@@ -19,4 +23,5 @@
         <button type="submit">Submit</button>
         <button type="reset">Reset</button>
     </form>
+</div>
 </div>
