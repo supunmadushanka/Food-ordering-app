@@ -140,6 +140,37 @@ router.get('/getuser/:userId', verifyToken, async (req, res) => {
     }
 });
 
+router.put('/updateUser/:userId', verifyToken, async (req, res) => {
+    User.findOne({ _id: req.params.userId },
+        (err, user) => {
+            if (!user)
+                return res.status(404).send(['Department Not Exist !']);
+            else {
+                if (req.body.username) {
+                    user.updateOne({ username: req.body.username }, function (err, doc) {
+                        if (err) {
+                            return res.status(422).send(['Eror from backend !']);
+                        } else {
+                            if (req.body.email) {
+                                user.updateOne({ email: req.body.email }, function (err, doc) {
+                                    if (err) {
+                                        return res.status(422).send(['Eror from backend !']);
+                                    } else {
+                                        return res.status(200).send(['User Added to list!']);
+                                    }
+
+                                })
+                            } else {
+                                return res.status(200).send(['User Added to list!']);
+                            }
+                        }
+
+                    })
+                }
+            }
+        })
+});
+
 router.get('/order/:userId', verifyToken, async (req, res) => {
 
     const user = await User.findById(req.params.userId);
@@ -302,7 +333,7 @@ router.post('/savecart/:userId', async (req, res) => {
     // create a new review
     const newCart = new Cart({
         userId: req.params.userId,
-        order : req.body
+        order: req.body
     });
 
     // save to the db
@@ -436,12 +467,12 @@ router.get('/getmenu/:menuId/:hotelId', verifyToken, async (req, res) => {
         },
         {
             menu: {
-              "$elemMatch": {
-                "id": req.params.menuId
-              }
+                "$elemMatch": {
+                    "id": req.params.menuId
+                }
             }
         },
-        function (err,menu) {
+        function (err, menu) {
             if (err) {
                 return res.status(500).send(err)
             } else {
@@ -522,7 +553,7 @@ router.put('/updateMenu/:itemId/:hotelId', verifyToken, async (req, res) => {
                                                 function (err, success) {
                                                     if (err) {
                                                         return res.status(500).send(err)
-                                                    }else {
+                                                    } else {
                                                         return res.status(200).send(success);
                                                     }
                                                 }

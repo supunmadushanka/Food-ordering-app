@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router'
 import { ProfileService } from '../../services/profile.service'
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-profile',
@@ -11,8 +12,8 @@ import { ProfileService } from '../../services/profile.service'
 export class ProfileComponent implements OnInit {
 
   public user = [];
-  username : string
-  email :string
+  username: string
+  email: string
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private _profileservice: ProfileService) { }
 
@@ -30,22 +31,36 @@ export class ProfileComponent implements OnInit {
   }
 
   profile = this.fb.group({
-    username: ['', [Validators.required]],
-    email: ['', [Validators.required]]
+    username: [''],
+    email: ['']
   })
 
   itemsubmit() {
-    /*
-    this._hotelservice.addItem(this.addItem.value,this.hotelId)
-    .subscribe(
-      response=>{
-        console.log('Success!', response);
-        //this.router.navigate(['/']);
-      },
-      error=>{
-        console.error('Error!', error)
+    this._profileservice.updateUser(this._profileservice.getUserId(), this.profile.value)
+      .subscribe(
+        response => {
+          console.log('Success!', response);
+          localStorage.setItem('order-my-food-username', this.profile.value.username);
+          localStorage.setItem('order-my-food-email',this.profile.value.email);
+          this.Success();
+        },
+        error => {
+          console.error('Error!', error)
+        }
+      )
+  }
+
+  Success = () => {
+    Swal.fire({
+      icon: 'success',
+      title: 'Updated successfully',
+      html: 'Redirecting to the profile...',
+      timer: 3000,
+      timerProgressBar: true,
+      showConfirmButton: false,
+      willOpen: () => {
       }
-    )*/
+    }).then((result) => { })
   }
 
 }
