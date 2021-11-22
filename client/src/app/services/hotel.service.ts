@@ -17,6 +17,7 @@ export class HotelService {
   private urlhotel: string = (environment.baseURL) ? `${environment.baseURL}api/hotel` : 'api/hotel';
   private orderURL: string = (environment.baseURL) ? `${environment.baseURL}api/order` : 'api/order';
   private cartSave: string = (environment.baseURL) ? `${environment.baseURL}api/savecart` : 'api/savecart';
+  private cartDelete : string = (environment.baseURL) ? `${environment.baseURL}api/deletecart` : 'api/deletecart';
   private cartGet: string = (environment.baseURL) ? `${environment.baseURL}api/getcart` : 'api/getcart';
   private itemURL: string = (environment.baseURL) ? `${environment.baseURL}api/addItem` : 'api/addItem';
   private hotelDelete: string = (environment.baseURL) ? `${environment.baseURL}api/deleteHotel` : 'api/deleteHotel';
@@ -165,8 +166,16 @@ export class HotelService {
     );
   }
 
-  public getCart = (userId): Observable<ICartItem[]> => {
-    return this.httpClient.get<ICartItem[]>(`${this.cartGet}/${userId}`).pipe(
+  public getCart = (userId): Observable<any> => {
+    return this.httpClient.get<any>(`${this.cartGet}/${userId}`).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err || this.customError);
+      })
+    );
+  }
+
+  public deleteCart = (userId): Observable<any> => {
+    return this.httpClient.delete<any>(`${this.cartDelete}/${userId}`).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err || this.customError);
       })

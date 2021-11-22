@@ -316,6 +316,27 @@ router.post('/savecart/:userId', async (req, res) => {
 
 });
 
+router.get('/getcart/:userId', verifyToken, async (req, res) => {
+    try {
+        console.log(req.params.userId)
+        const cart = await Cart.findOne({ userId: req.params.userId });
+        res.json(cart);
+    } catch (err) {
+        res.status(404).send(`Unable to process your request - ${err}`);
+    }
+});
+
+router.delete('/deletecart/:userId', verifyToken, async (req, res) => {
+    Cart.deleteOne({ userId: req.params.userId },
+        (err, dep) => {
+            if (!dep)
+                return res.status(404).send(['Hotel Not Exist !']);
+            else {
+                return res.status(200).json({ message: 'Hotel removed !' });
+            }
+        })
+});
+
 router.post('/addItem/:hotelId', verifyToken, async (req, res) => {
 
     const hotel = await Hotel.findById(req.params.hotelId);

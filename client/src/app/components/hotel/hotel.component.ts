@@ -12,7 +12,7 @@ import { SideNavService } from '../../services/side-nav.service';
 })
 export class HotelComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('sidenav', {static: true}) public sidenav: MatSidenav;
+  @ViewChild('sidenav', { static: true }) public sidenav: MatSidenav;
 
   public hotels = [];
   public hotel;
@@ -28,20 +28,20 @@ export class HotelComponent implements OnInit, AfterViewInit {
   public userId = '';
   public isSideNavShowing: boolean = false;
 
-  constructor(private _hotelService: HotelService, private route: ActivatedRoute, 
+  constructor(private _hotelService: HotelService, private route: ActivatedRoute,
     private router: Router, private _sidenavService: SideNavService, private ref: ChangeDetectorRef) { }
 
-  deleteHistory(orderId){
-    this._hotelService.deleteOrder(orderId,this.userId)
-    .subscribe(
-      response=>{
-        console.log('success',response);
-        this.ngOnInit();
-      },
-      error=>{
-        console.error('error',error)
-      }
-    )
+  deleteHistory(orderId) {
+    this._hotelService.deleteOrder(orderId, this.userId)
+      .subscribe(
+        response => {
+          console.log('success', response);
+          this.ngOnInit();
+        },
+        error => {
+          console.error('error', error)
+        }
+      )
 
   }
 
@@ -50,7 +50,7 @@ export class HotelComponent implements OnInit, AfterViewInit {
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   }
 
-  addItem(){
+  addItem() {
     this.router.navigate(['/additem']);
     this._hotelService.setHotelId(this.hotel._id);
   }
@@ -64,7 +64,7 @@ export class HotelComponent implements OnInit, AfterViewInit {
       "hotel": this.hotel.name
     }
 
-    if(this.isItemAlreadyExist(newItem)) {
+    if (this.isItemAlreadyExist(newItem)) {
       this.itemAlreadyExistModal(newItem);
     }
     else {
@@ -74,17 +74,25 @@ export class HotelComponent implements OnInit, AfterViewInit {
     }
   }
 
-  saveCart(){
-    console.log(this.cartItems);
-    this._hotelService.saveCart(this.cartItems,this.userId)
-    .subscribe(
-      response=>{
-        console.log('success',response)
-      },
-      err=>{
-        console.error('error',err)
-      }
-    )
+  saveCart() {
+    this._hotelService.deleteCart(this.userId)
+      .subscribe(
+        response => {
+          console.log('success', response)
+          this._hotelService.saveCart(this.cartItems, this.userId)
+            .subscribe(
+              response => {
+                console.log('success', response)
+              },
+              err => {
+                console.error('error', err)
+              }
+            )
+        },
+        err => {
+          console.error('error', err)
+        }
+      )
   }
 
   addItemToMyCart = (newItem) => {
@@ -115,7 +123,7 @@ export class HotelComponent implements OnInit, AfterViewInit {
   }
 
   toggleSideNav = (isShoppingCart) => {
-    if(isShoppingCart) {
+    if (isShoppingCart) {
       this.showOrderHistory = false;
     }
     else {
@@ -149,27 +157,27 @@ export class HotelComponent implements OnInit, AfterViewInit {
   }
 
   addQuantity = (cartItem) => {
-    this.cartItems.forEach((item,index)=>{
-      if(item.id == cartItem.id)
-        this.cartItems[index].quantity = Number(this.cartItems[index].quantity)  + 1; 
-   });
-   this.calculateAmount();
+    this.cartItems.forEach((item, index) => {
+      if (item.id == cartItem.id)
+        this.cartItems[index].quantity = Number(this.cartItems[index].quantity) + 1;
+    });
+    this.calculateAmount();
   }
 
   removeQuantity = (cartItem) => {
-    this.cartItems.forEach((item,index)=>{
-      if(item.id == cartItem.id) {
+    this.cartItems.forEach((item, index) => {
+      if (item.id == cartItem.id) {
         if (this.cartItems[index].quantity > 0)
           this.cartItems[index].quantity -= 1;
       }
-   });
-   this.calculateAmount();
+    });
+    this.calculateAmount();
   }
 
   calculateAmount = () => {
-    this.totalAmount = 0; 
+    this.totalAmount = 0;
     this.cartItems.map((item) => {
-      this.totalAmount = this.totalAmount + (item.quantity*item.price)
+      this.totalAmount = this.totalAmount + (item.quantity * item.price)
     });
     return this.totalAmount;
   }
@@ -190,6 +198,15 @@ export class HotelComponent implements OnInit, AfterViewInit {
           amountPaid: this.calculateAmount(),
           orderDate: new Date()
         }
+        this._hotelService.deleteCart(this.userId)
+          .subscribe(
+            response => {
+              console.log('success', response)
+            },
+            err => {
+              console.error('error', err)
+            }
+          )
         this._hotelService.saveOrder(order, this.userId).subscribe(
           (success) => {
             Swal.fire({
@@ -215,17 +232,17 @@ export class HotelComponent implements OnInit, AfterViewInit {
     })
   }
 
-  getOrderFromService = async() => {
+  getOrderFromService = async () => {
     this.ordersHistory = await this._hotelService.getOrders(this.userId).toPromise();
-    this.ordersHistory.orders = this.ordersHistory.orders.sort((a,b) => {
+    this.ordersHistory.orders = this.ordersHistory.orders.sort((a, b) => {
       let c = <any>new Date(b.orderDate);
       let d = <any>new Date(a.orderDate);
-      return c-d;
+      return c - d;
     });
     return this.ordersHistory;
   }
 
-  getOrderHistory = async() => {
+  getOrderHistory = async () => {
     this.toggleSideNav(false);
     this.ordersHistory = await this.getOrderFromService();
   }
@@ -238,7 +255,7 @@ export class HotelComponent implements OnInit, AfterViewInit {
     this.scrollTop();
 
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.hotelId =  parseInt(params.get('id'));
+      this.hotelId = parseInt(params.get('id'));
     });
 
     this._hotelService.getHotel(this.hotelId).subscribe((data) => {
@@ -250,9 +267,9 @@ export class HotelComponent implements OnInit, AfterViewInit {
     this.userId = this._hotelService.userId;
     this.cartItems = this._hotelService.cartItems;
     this.calculateAmount();
-    
 
-    if(!this.userName) {
+
+    if (!this.userName) {
       this.router.navigateByUrl("/hotels");
     }
 
@@ -268,9 +285,19 @@ export class HotelComponent implements OnInit, AfterViewInit {
 
     this._hotelService.getCart(this.userId).subscribe(
       (data) => {
-        this._hotelService.setCartSaved(data);
-        this.cartItems = this._hotelService.cartItems;
-        console.log(this.cartItems)
+        if (data) {
+          for (let element of data.order) {
+            const newItem = {
+              "id": element.id,
+              "name": element.name,
+              "price": element.price,
+              "quantity": element.quantity,
+              "hotel": element.hotel
+            }
+            this.addItemToMyCart(newItem);
+            this.calculateAmount();
+          };
+        }
       },
       (err) => {
         console.log(err);
