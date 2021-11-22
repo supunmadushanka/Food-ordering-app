@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const User = require('../models/user');
 const Hotel = require('../models/hotel');
 const Review = require('../models/review');
+const Cart = require('../models/cart');
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -291,6 +292,49 @@ router.post('/order/:userId', verifyToken, async (req, res) => {
             }
         }
     )
+});
+
+router.post('/savecart/:userId', async (req, res) => {
+
+    const user = await User.findById(req.params.userId);
+    if (!user) return res.status(400).send("User doesn't exist!");
+
+    // create a new review
+    const newCart = new Cart({
+        userId: req.params.userId,
+        order : req.body
+    });
+
+    // save to the db
+    newCart.save((err, doc) => {
+        if (err) {
+            return res.status(422).send(['Save failed !']);
+        } else {
+            return res.status(200).send(['Cart saved !']);
+        }
+    })
+
+});
+
+router.get('/getcart/:userId', verifyToken, async (req, res) => {
+    try {
+        console.log(req.params.userId)
+        const cart = await Cart.findOne({ userId: req.params.userId });
+        res.json(cart);
+    } catch (err) {
+        res.status(404).send(`Unable to process your request - ${err}`);
+    }
+});
+
+router.delete('/deletecart/:userId', verifyToken, async (req, res) => {
+    Cart.deleteOne({ userId: req.params.userId },
+        (err, dep) => {
+            if (!dep)
+                return res.status(404).send(['Hotel Not Exist !']);
+            else {
+                return res.status(200).json({ message: 'Hotel removed !' });
+            }
+        })
 });
 
 router.post('/addItem/:hotelId', verifyToken, async (req, res) => {

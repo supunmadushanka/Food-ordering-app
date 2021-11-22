@@ -16,6 +16,9 @@ export class HotelService {
   private url: string = (environment.baseURL) ? `${environment.baseURL}api/hotels` : 'api/hotels';
   private urlhotel: string = (environment.baseURL) ? `${environment.baseURL}api/hotel` : 'api/hotel';
   private orderURL: string = (environment.baseURL) ? `${environment.baseURL}api/order` : 'api/order';
+  private cartSave: string = (environment.baseURL) ? `${environment.baseURL}api/savecart` : 'api/savecart';
+  private cartDelete : string = (environment.baseURL) ? `${environment.baseURL}api/deletecart` : 'api/deletecart';
+  private cartGet: string = (environment.baseURL) ? `${environment.baseURL}api/getcart` : 'api/getcart';
   private itemURL: string = (environment.baseURL) ? `${environment.baseURL}api/addItem` : 'api/addItem';
   private hotelDelete: string = (environment.baseURL) ? `${environment.baseURL}api/deleteHotel` : 'api/deleteHotel';
   private hotelUpdate: string = (environment.baseURL) ? `${environment.baseURL}api/updateHotel` : 'api/updateHotel';
@@ -146,8 +149,33 @@ export class HotelService {
     );
   }
 
+  public saveCart = (orders, userId): Observable<any> => {
+    this.clearAllCartItems();
+    return this.httpClient.post<any>(`${this.cartSave}/${userId}`, orders).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err || this.customError);
+      })
+    );
+  }
+
   public getOrders = (userId): Observable<IOrder[]> => {
     return this.httpClient.get<IOrder[]>(`${this.orderURL}/${userId}`).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err || this.customError);
+      })
+    );
+  }
+
+  public getCart = (userId): Observable<any> => {
+    return this.httpClient.get<any>(`${this.cartGet}/${userId}`).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err || this.customError);
+      })
+    );
+  }
+
+  public deleteCart = (userId): Observable<any> => {
+    return this.httpClient.delete<any>(`${this.cartDelete}/${userId}`).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err || this.customError);
       })
@@ -184,6 +212,9 @@ export class HotelService {
 
   public setOrderHistory = (orderHist) => {
     this.orderHistoryChange.next(orderHist)
+  }
+  public setCartSaved = (cart) => {
+    this.cartItemsChange.next(cart)
   }
 
   public removeCartItem = (item) => {

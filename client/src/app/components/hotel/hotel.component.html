@@ -46,6 +46,9 @@
                         
                     </div>
                     <div class="amount" *ngIf="cartItems.length"> Bill Amount: Rs. {{totalAmount}}</div>
+                    <button mat-raised-button color="warn" class="calculate-menu" *ngIf="cartItems.length && totalAmount" (click)="saveCart()">
+                        Save cart
+                    </button>
                     <button mat-raised-button color="warn" class="calculate-menu" *ngIf="cartItems.length && totalAmount" (click)="openPaymentMethod()">
                         Pay Bill
                     </button>
