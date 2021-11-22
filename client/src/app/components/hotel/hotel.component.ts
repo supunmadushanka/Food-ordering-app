@@ -270,6 +270,7 @@ export class HotelComponent implements OnInit, AfterViewInit {
       (data) => {
         this._hotelService.setCartSaved(data);
         this.cartItems = this._hotelService.cartItems;
+        console.log(this.cartItems)
       },
       (err) => {
         console.log(err);
