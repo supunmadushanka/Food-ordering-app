@@ -40,6 +40,7 @@ export class DriverComponent implements OnInit {
         response => {
           console.log('success', response);
           this.ngOnInit();
+          this.driverDeleted();
         },
         error => {
           console.error('error', error)
@@ -108,6 +109,20 @@ export class DriverComponent implements OnInit {
     Swal.fire({
       icon: 'success',
       title: 'Driver added successfully',
+      html: 'Redirecting to the Driver page...',
+      timer: 3000,
+      timerProgressBar: true,
+      showConfirmButton: false,
+      willOpen: () => {
+        Swal.showLoading();
+      }
+    }).then((result) => { })
+  }
+
+  driverDeleted = () => {
+    Swal.fire({
+      icon: 'success',
+      title: 'Driver deleted successfully',
       html: 'Redirecting to the Driver page...',
       timer: 3000,
       timerProgressBar: true,

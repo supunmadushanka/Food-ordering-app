@@ -604,4 +604,15 @@ router.get('/getdrivers', verifyToken, async (req, res) => {
     }
 });
 
+router.delete('/deletedriver/:driverId', verifyToken, async (req, res) => {
+    Driver.deleteOne({ _id: req.params.driverId },
+        (err, rew) => {
+            if (!rew)
+                return res.status(404).send(['Review Not Exist !']);
+            else {
+                return res.status(200).json({ message: 'Review removed !' });
+            }
+        })
+});
+
 module.exports = router;
