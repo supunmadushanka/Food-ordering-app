@@ -11,6 +11,8 @@ import { ForgotPasswordComponent } from './components/login/forgot-password/forg
 import { ReviewsComponent } from './components/reviews/reviews.component';
 import { AddHotelComponent } from './components/hotels/add-hotel/add-hotel.component';
 import { UpdateItemComponent } from './components/menu-item/update-item/update-item.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { DriverComponent } from './components/driver/driver.component';
 
 const routes: Routes = [
   { path:'', redirectTo: '/login', pathMatch: 'full'},
@@ -20,6 +22,8 @@ const routes: Routes = [
   { path:'forgetpw', component: ForgotPasswordComponent },
   { path:'review', component: ReviewsComponent },
   { path:'addhotel', component: AddHotelComponent },
+  { path:'profile', component: ProfileComponent },
+  { path:'driver', component: DriverComponent },
   { path:'updateitem/:id', component: UpdateItemComponent },
   { path:'updatehotelcard', component: UpdateHotelCardComponent },
   { path: 'hotels', component: HotelsComponent, canActivate: [AuthGuard] },

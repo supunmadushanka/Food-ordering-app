@@ -5,6 +5,7 @@ const User = require('../models/user');
 const Hotel = require('../models/hotel');
 const Review = require('../models/review');
 const Cart = require('../models/cart');
+const Driver = require('../models/driver');
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -138,6 +139,37 @@ router.get('/getuser/:userId', verifyToken, async (req, res) => {
     } catch (err) {
         res.status(404).send(`Unable to process your request - ${err}`);
     }
+});
+
+router.put('/updateUser/:userId', verifyToken, async (req, res) => {
+    User.findOne({ _id: req.params.userId },
+        (err, user) => {
+            if (!user)
+                return res.status(404).send(['Department Not Exist !']);
+            else {
+                if (req.body.username) {
+                    user.updateOne({ username: req.body.username }, function (err, doc) {
+                        if (err) {
+                            return res.status(422).send(['Eror from backend !']);
+                        } else {
+                            if (req.body.email) {
+                                user.updateOne({ email: req.body.email }, function (err, doc) {
+                                    if (err) {
+                                        return res.status(422).send(['Eror from backend !']);
+                                    } else {
+                                        return res.status(200).send(['User Added to list!']);
+                                    }
+
+                                })
+                            } else {
+                                return res.status(200).send(['User Added to list!']);
+                            }
+                        }
+
+                    })
+                }
+            }
+        })
 });
 
 router.get('/order/:userId', verifyToken, async (req, res) => {
@@ -302,7 +334,7 @@ router.post('/savecart/:userId', async (req, res) => {
     // create a new review
     const newCart = new Cart({
         userId: req.params.userId,
-        order : req.body
+        order: req.body
     });
 
     // save to the db
@@ -436,12 +468,12 @@ router.get('/getmenu/:menuId/:hotelId', verifyToken, async (req, res) => {
         },
         {
             menu: {
-              "$elemMatch": {
-                "id": req.params.menuId
-              }
+                "$elemMatch": {
+                    "id": req.params.menuId
+                }
             }
         },
-        function (err,menu) {
+        function (err, menu) {
             if (err) {
                 return res.status(500).send(err)
             } else {
@@ -522,7 +554,7 @@ router.put('/updateMenu/:itemId/:hotelId', verifyToken, async (req, res) => {
                                                 function (err, success) {
                                                     if (err) {
                                                         return res.status(500).send(err)
-                                                    }else {
+                                                    } else {
                                                         return res.status(200).send(success);
                                                     }
                                                 }
@@ -539,6 +571,46 @@ router.put('/updateMenu/:itemId/:hotelId', verifyToken, async (req, res) => {
                         }
                     )
                 }
+            }
+        })
+});
+
+router.post('/addriver', async (req, res) => {
+
+    // create a new review
+    const newDriver = new Driver({
+        email: req.body.email,
+        name: req.body.name,
+        address: req.body.address
+    });
+
+    // save to the db
+    newDriver.save((err, doc) => {
+        if (err) {
+            return res.status(422).send(['Save failed !']);
+        } else {
+            return res.status(200).send(['Department Aded !']);
+        }
+    })
+
+});
+
+router.get('/getdrivers', verifyToken, async (req, res) => {
+    try {
+        const drivers = await Driver.find();
+        res.json(drivers);
+    } catch (err) {
+        res.status(404).send(`Unable to process your request - ${err}`);
+    }
+});
+
+router.delete('/deletedriver/:driverId', verifyToken, async (req, res) => {
+    Driver.deleteOne({ _id: req.params.driverId },
+        (err, rew) => {
+            if (!rew)
+                return res.status(404).send(['Review Not Exist !']);
+            else {
+                return res.status(200).json({ message: 'Review removed !' });
             }
         })
 });

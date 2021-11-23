@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ChangeDetectorRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ChangeDetectorRef, OnInit, ViewChild,OnDestroy } from '@angular/core';
 import { HotelService } from '../../services/hotel.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
@@ -10,7 +10,7 @@ import { SideNavService } from '../../services/side-nav.service';
   templateUrl: './hotel.component.html',
   styleUrls: ['./hotel.component.scss']
 })
-export class HotelComponent implements OnInit, AfterViewInit {
+export class HotelComponent implements OnInit, AfterViewInit,OnDestroy {
 
   @ViewChild('sidenav', { static: true }) public sidenav: MatSidenav;
 
@@ -305,5 +305,9 @@ export class HotelComponent implements OnInit, AfterViewInit {
     );
 
     this.ordersHistory = await this.getOrderFromService();
+  }
+
+  ngOnDestroy(){
+    this._hotelService.cartItems = [];
   }
 }
