@@ -5,6 +5,7 @@ const User = require('../models/user');
 const Hotel = require('../models/hotel');
 const Review = require('../models/review');
 const Cart = require('../models/cart');
+const Driver = require('../models/driver');
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -572,6 +573,35 @@ router.put('/updateMenu/:itemId/:hotelId', verifyToken, async (req, res) => {
                 }
             }
         })
+});
+
+router.post('/addriver', async (req, res) => {
+
+    // create a new review
+    const newDriver = new Driver({
+        email: req.body.email,
+        name: req.body.name,
+        address: req.body.address
+    });
+
+    // save to the db
+    newDriver.save((err, doc) => {
+        if (err) {
+            return res.status(422).send(['Save failed !']);
+        } else {
+            return res.status(200).send(['Department Aded !']);
+        }
+    })
+
+});
+
+router.get('/getdrivers', verifyToken, async (req, res) => {
+    try {
+        const drivers = await Driver.find();
+        res.json(drivers);
+    } catch (err) {
+        res.status(404).send(`Unable to process your request - ${err}`);
+    }
 });
 
 module.exports = router;

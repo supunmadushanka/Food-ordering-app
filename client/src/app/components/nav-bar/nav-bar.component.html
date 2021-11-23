@@ -5,7 +5,7 @@
         <ngx-avatar name="{{userName}}" textSizeRatio="2.5" bgColor="#f5f5f5" fgColor="#9c27b0"></ngx-avatar>
         <mat-menu #menu="matMenu">
             <button mat-menu-item routerLink="/profile"><mat-icon>account_circle</mat-icon>Profile</button>
-            <button mat-menu-item (click)="logoutUser()"><mat-icon>motorcycle</mat-icon>Drivers</button>
+            <button mat-menu-item routerLink="/driver"><mat-icon>motorcycle</mat-icon>Drivers</button>
             <button mat-menu-item (click)="logoutUser()"><mat-icon>logout</mat-icon>Logout</button>
           </mat-menu>
     </div>
