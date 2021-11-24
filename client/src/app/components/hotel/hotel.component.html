@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="header-icons">
-                        <mat-icon class="shopping-history" (click)="getOrderHistory()" title="Order History">history</mat-icon>
+                        <mat-icon class="shopping-history" (click)="getOrderHistory()" title="Order History">History</mat-icon>
                         <mat-icon matBadge="{{cartItems.length}}" matBadgeColor="warn" class="shopping-cart" (click)="toggleSideNav(true); scrollTop()" *ngIf="cartItems.length" title="Your Basket">shopping_cart</mat-icon>
                         <mat-icon class="shopping-cart" (click)="toggleSideNav(true)" *ngIf="!cartItems.length" title="Your Basket">shopping_cart</mat-icon>
                     </div> 

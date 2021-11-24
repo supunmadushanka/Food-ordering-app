@@ -8,11 +8,11 @@ const userSchema = new Schema({
     password: String,
     orders: [{
         menu: [{
-            id: Number,
-            name: String,
-            price: String,
-            quantity: Number,
-            hotel: String,
+            id: Number ,
+            name: String ,
+            price: String ,
+            quantity: Number ,
+            hotel: String ,
         }],
         amountPaid: Number,
         orderDate: Date
