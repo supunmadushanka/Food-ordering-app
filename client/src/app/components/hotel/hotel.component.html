@@ -33,13 +33,13 @@
         <mat-sidenav #sidenav [mode]="toggleMode" position="end" [opened]="false">
             <div class="cart-items-sidenav" *ngIf="!showOrderHistory">
                 <div class="price-container" *ngIf="!cartItems.length">
-                    <h3>My Basket</h3>
+                    <h3>My Food Basket</h3>
                     <p class="empty-basket">
-                        Your basket is empty. Please add items to your basket.
+                        Your Food basket is empty. Please add items to your Food basket.
                     </p>
                 </div>
                 <div class="price-container" *ngIf="cartItems.length">
-                    <h3>My Basket</h3>
+                    <h3>My Food Basket</h3>
                     <div class="cart-items">
                         <app-cart-item [cartItems]="cartItems" (removeQuantityEvent)="removeQuantity($event)"
                         (addQuantityEvent)="addQuantity($event)" (removeItemEvent)="removeItem($event)"></app-cart-item>
@@ -50,7 +50,7 @@
                         Save cart
                     </button>
                     <button mat-raised-button color="warn" class="calculate-menu" *ngIf="cartItems.length && totalAmount" (click)="openPaymentMethod()">
-                        Pay Bill
+                        Pay Your Bill
                     </button>
                 </div>
             </div>
