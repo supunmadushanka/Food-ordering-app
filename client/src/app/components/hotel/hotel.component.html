@@ -35,7 +35,7 @@
                 <div class="price-container" *ngIf="!cartItems.length">
                     <h3>My Food Basket</h3>
                     <p class="empty-basket">
-                        Your Food basket is empty. Please add items to your Food basket.
+                        Your Food basket is empty. Please add items to your cart.
                     </p>
                 </div>
                 <div class="price-container" *ngIf="cartItems.length">
@@ -45,7 +45,7 @@
                         (addQuantityEvent)="addQuantity($event)" (removeItemEvent)="removeItem($event)"></app-cart-item>
                         
                     </div>
-                    <div class="amount" *ngIf="cartItems.length"> Bill Amount: Rs. {{totalAmount}}</div>
+                    <div class="amount" *ngIf="cartItems.length"> Bill Amount : Rs. {{totalAmount}}</div>
                     <button mat-raised-button color="warn" class="calculate-menu" *ngIf="cartItems.length && totalAmount" (click)="saveCart()">
                         Save cart
                     </button>
