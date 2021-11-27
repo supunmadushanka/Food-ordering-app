@@ -30,6 +30,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { LoginUserComponent } from './components/login-user/login-user.component';
+import { DriverComponent } from './driver/driver.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { LoginUserComponent } from './components/login-user/login-user.component
     SearchBarComponent,
     RegisterComponent,
     LoginComponent,
-    LoginUserComponent
+    LoginUserComponent,
+    DriverComponent
   ],
   imports: [
     BrowserModule,
