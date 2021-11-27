@@ -17,9 +17,9 @@
     </div>
     <div>
         <div class="div-border" *ngFor="let review of reviews">
-            <div class="name">{{review.userName}}</div>
-            <div class="content">{{review.review}}</div>
-            <button (click)="whenClick(review._id,review.review)">update</button>&nbsp;
+            <div class="name">{review.userName}</div>
+            <div class="content">{review.review}</div>
+            <button (click)="whenClick(review._id)">update</button>&nbsp;
             <button (click)="reviewDelete(review._id)">Delete</button>
         </div>
     </div>
