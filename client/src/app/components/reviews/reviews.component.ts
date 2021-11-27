@@ -65,23 +65,7 @@ export class ReviewsComponent implements OnInit {
     userName: ['', [Validators.required]],
   })
 
-  reviewsubmit() {
-    this.addReview.value.userId = this.userId;
-    this.addReview.value.userName = this.username;
-    this.addReview.value.hotelId = this.hotelId;
-
-    this._reviewService.addReview(this.addReview.value)
-      .subscribe(
-        response => {
-          console.log('success', response);
-          this.addReview.reset();
-          this.ngOnInit();
-        },
-        error => {
-          console.error('error', error)
-        }
-      )
-  }
+  
 
   reviewDelete(reviewId) {
     this._reviewService.deleteReview(reviewId)
