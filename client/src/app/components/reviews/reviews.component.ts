@@ -83,18 +83,18 @@ export class ReviewsComponent implements OnInit {
       )
   }
 
-  // reviewDelete(reviewId) {
-  //   this._reviewService.deleteReview(reviewId)
-  //     .subscribe(
-  //       response => {
-  //         console.log('success', response);
-  //         this.ngOnInit();
-  //       },
-  //       error => {
-  //         console.error('error', error)
-  //       }
-  //     )
-  // }
+  reviewDelete(reviewId) {
+    this._reviewService.deleteReview(reviewId)
+      .subscribe(
+        response => {
+          console.log('success', response);
+          this.ngOnInit();
+        },
+        error => {
+          console.error('error', error)
+        }
+      )
+  }
 
   whenClick(reviewId,review) {
     this.reviewId = reviewId;
