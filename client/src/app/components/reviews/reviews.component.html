@@ -11,16 +11,23 @@
                 <input matInput placeholder="Ex. Food is fine" formControlName="review">
             </mat-form-field>
 
-            <button type="submit">Submit</button>&nbsp;
-            <button type="reset">Reset</button>
+            <button type="submit" mat-raised-button color="primary">Submit</button>&nbsp;
+            <button type="reset" mat-raised-button>Reset</button>
         </form>
     </div>
-    <div>
+    <div class=".review-cards">
+
         <div class="div-border" *ngFor="let review of reviews">
-            <div class="name">{{review.userName}}</div>
-            <div class="content">{{review.review}}</div>
-            <button (click)="whenClick(review._id,review.review)">update</button>&nbsp;
-            <button (click)="reviewDelete(review._id)">Delete</button>
+            <mat-card>
+                <mat-card-header>
+                    <div class="name">{{review.userName}}</div>
+                </mat-card-header>
+                <div class="content">{{review.review}}</div>
+                <button (click)="whenClick(review._id,review.review)" mat-raised-button
+                    color="primary">update</button>&nbsp;
+                <button (click)="reviewDelete(review._id)" mat-raised-button color="warn">Delete</button>
+            </mat-card>
         </div>
+
     </div>
 </div>

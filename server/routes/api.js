@@ -152,22 +152,20 @@ router.put('/updateUser/:userId', verifyToken, async (req, res) => {
                         if (err) {
                             return res.status(422).send(['Eror from backend !']);
                         } else {
-                            if (req.body.email) {
-                                user.updateOne({ email: req.body.email }, function (err, doc) {
-                                    if (err) {
-                                        return res.status(422).send(['Eror from backend !']);
-                                    } else {
-                                        return res.status(200).send(['User Added to list!']);
-                                    }
-
-                                })
-                            } else {
-                                return res.status(200).send(['User Added to list!']);
-                            }
                         }
-
                     })
                 }
+                if (req.body.email) {
+                    user.updateOne({ email: req.body.email }, function (err, doc) {
+                        if (err) {
+                            return res.status(422).send(['Eror from backend !']);
+                        } else {
+                            return res.status(200).send(['User Added to list!']);
+                        }
+                    })
+                } else {
+                }
+                return res.status(200).send(['User Added to list!']);
             }
         })
 });
@@ -228,33 +226,32 @@ router.put('/updateHotel/:hotelId', verifyToken, async (req, res) => {
                         if (err) {
                             return res.status(422).send(['Eror from backend !']);
                         } else {
-                            if (req.body.address) {
-                                hotel.updateOne({ address: req.body.address }, function (err, doc) {
-                                    if (err) {
-                                        return res.status(422).send(['Eror from backend !']);
-                                    } else {
-                                        if (req.body.cuisines) {
-                                            hotel.updateOne({ cuisines: req.body.cuisines }, function (err, doc) {
-                                                if (err) {
-                                                    return res.status(422).send(['Eror from backend !']);
-                                                } else {
-                                                    return res.status(200).send(['User Added to list!']);
-                                                }
-
-                                            })
-                                        } else {
-                                            return res.status(200).send(['User Added to list!']);
-                                        }
-                                    }
-
-                                })
-                            } else {
-                                return res.status(200).send(['User Added to list!']);
-                            }
+                        }
+                    })
+                }
+                console.log(req.body.address)
+                if (req.body.address) {
+                    hotel.updateOne({ address: req.body.address }, function (err, doc) {
+                        if (err) {
+                            return res.status(422).send(['Eror from backend !']);
+                        } else {
                         }
 
                     })
+                } else {
                 }
+                if (req.body.cuisines) {
+                    hotel.updateOne({ cuisines: req.body.cuisines }, function (err, doc) {
+                        if (err) {
+                            return res.status(422).send(['Eror from backend !']);
+                        } else {
+                            return res.status(200).send(['User Added to list!']);
+                        }
+
+                    })
+                } else {
+                }
+                return res.status(200).send(['User Added to list!']);
             }
         })
 });
@@ -526,51 +523,52 @@ router.put('/updateMenu/:itemId/:hotelId', verifyToken, async (req, res) => {
                         function (err, success) {
                             if (err) {
                                 return res.status(500).send(err)
-                            } else if (req.body.desc) {
-                                Hotel.updateOne(
-                                    {
-                                        "_id": req.params.hotelId,
-                                        "menu.id": req.params.itemId
-                                    },
-                                    {
-                                        "$set": {
-                                            "menu.$.desc": req.body.desc
-                                        }
-                                    },
-                                    function (err, success) {
-                                        if (err) {
-                                            return res.status(500).send(err)
-                                        } else if (req.body.price) {
-                                            Hotel.updateOne(
-                                                {
-                                                    "_id": req.params.hotelId,
-                                                    "menu.id": req.params.itemId
-                                                },
-                                                {
-                                                    "$set": {
-                                                        "menu.$.price": req.body.price
-                                                    }
-                                                },
-                                                function (err, success) {
-                                                    if (err) {
-                                                        return res.status(500).send(err)
-                                                    } else {
-                                                        return res.status(200).send(success);
-                                                    }
-                                                }
-                                            )
-                                        } else {
-                                            return res.status(200).send(success);
-                                        }
-                                    }
-                                )
-
                             } else {
-                                return res.status(200).send(success);
                             }
                         }
                     )
                 }
+
+                if (req.body.desc) {
+                    Hotel.updateOne(
+                        {
+                            "_id": req.params.hotelId,
+                            "menu.id": req.params.itemId
+                        },
+                        {
+                            "$set": {
+                                "menu.$.desc": req.body.desc
+                            }
+                        },
+                        function (err, success) {
+                            if (err) {
+                                return res.status(500).send(err)
+                            } else {
+                            }
+                        }
+                    )
+                }
+
+                if (req.body.price) {
+                    Hotel.updateOne(
+                        {
+                            "_id": req.params.hotelId,
+                            "menu.id": req.params.itemId
+                        },
+                        {
+                            "$set": {
+                                "menu.$.price": req.body.price
+                            }
+                        },
+                        function (err, success) {
+                            if (err) {
+                                return res.status(500).send(err)
+                            } else {
+                            }
+                        }
+                    )
+                }
+                return res.status(200).send(hotel);
             }
         })
 });
