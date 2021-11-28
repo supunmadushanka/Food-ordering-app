@@ -4,16 +4,20 @@
         <h3 class="tagline">Drivers</h3>
     </div>
     <div class="form">
-        <button (click)="openDriverModal()">Add driver</button>
+        <button (click)="openDriverModal()" mat-raised-button color="primary">Add driver</button>
     </div>
     <div>
         <div class="div-border" *ngFor="let driver of drivers">
-            <div class="name">{{driver.name}}</div>
-            <div class="content">
-                Email&ensp;:&ensp;{{driver.email}}<br>
-                Address&ensp;:&ensp;{{driver.address}}
-            </div>
-            <button (click)="driverDelete(driver._id)">Delete</button>
+            <mat-card>
+                <mat-card-header>
+                    <div class="name">{{driver.name}}</div>
+                </mat-card-header>
+                <div class="content">
+                    Email&ensp;:&ensp;{{driver.email}}<br>
+                    Address&ensp;:&ensp;{{driver.address}}
+                </div>
+                <button (click)="driverDelete(driver._id)" mat-raised-button color="warn">Delete</button>
+            </mat-card>
         </div>
     </div>
 </div>

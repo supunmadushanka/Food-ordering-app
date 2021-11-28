@@ -4,8 +4,8 @@
         <mat-card-header>
             <mat-card-title>{{menu.name}}</mat-card-title>
             <div class="updel">
-                <button (click)="deleteItem(menu.id)">Delete</button>&nbsp;
-                <button [routerLink]="['/updateitem',menu.id]">Update</button>
+                <button (click)="deleteItem(menu.id)" mat-raised-button color="warn">Delete</button>&nbsp;
+                <button [routerLink]="['/updateitem',menu.id]" mat-raised-button color="primary">Update</button>
             </div>
         </mat-card-header>
         <mat-card-content>

@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
       '<b>Already have an account?</b>&nbsp' +
       '<a href="/login">Click here to login</a> ',
       focusConfirm: false,
-      confirmButtonColor: '#9c27b0',
+      confirmButtonColor: '#1838c5',
       allowOutsideClick: false,
       allowEscapeKey: false,
       preConfirm: () => {
